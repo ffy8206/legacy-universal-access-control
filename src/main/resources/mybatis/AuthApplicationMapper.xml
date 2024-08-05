@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthApplication" >
+    <id column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="APPLICATION_NAME" property="applicationName" jdbcType="VARCHAR" />
+    <result column="APPLICATION_URL" property="applicationUrl" jdbcType="VARCHAR" />
+    <result column="APPLICATION_CONTACT" property="applicationContact" jdbcType="VARCHAR" />
+    <result column="APPLICATION_CONTACT_PHONE" property="applicationContactPhone" jdbcType="VARCHAR" />
+    <result column="APPLICATION_SYNC_FIELDS" property="applicationSyncFields" jdbcType="BIGINT" />
+    <result column="APPLICATION_REMARK" property="applicationRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    APPLICATION_ID, APPLICATION_NAME, APPLICATION_URL, APPLICATION_CONTACT, APPLICATION_CONTACT_PHONE, 
+    APPLICATION_SYNC_FIELDS, APPLICATION_REMARK, CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthApplicationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_APPLICATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectPaginationByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthApplicationExample" >
+   select <include refid="Base_Column_List" /> from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    
+    from UAC.AUTH_APPLICATION
+     <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+     <!-- 
+     <if test="_parameter != null" >
+      UAC.AUTH_APPLICATION.APPLICATION_NAME LIKE CONCAT(CONCAT('%', #{_parameter, jdbcType=VARCHAR}),'%')   
+    </if>
+     -->
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_APPLICATION
+    where APPLICATION_ID = #{applicationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.AUTH_APPLICATION
+    where APPLICATION_ID = #{applicationId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimaryKeyWithValidator" parameterType="java.lang.Long" >
+    DELETE A FROM UAC.AUTH_APPLICATION A
+	WHERE A.APPLICATION_ID = #{applicationId,jdbcType=BIGINT}
+	AND NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_GROUP B WHERE B.APPLICATION_ID=A.APPLICATION_ID)
+	AND NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_ROLE C WHERE C.APPLICATION_ID=A.APPLICATION_ID)
+	AND NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_DATARANGE D WHERE D.APPLICATION_ID=A.APPLICATION_ID)
+	AND NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_PRIVILEGE E WHERE E.APPLICATION_ID=A.APPLICATION_ID)
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthApplicationExample" >
+    delete from UAC.AUTH_APPLICATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthApplication" >
+    <selectKey resultType="java.lang.Long" keyProperty="applicationId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_APPLICATION (APPLICATION_ID, APPLICATION_NAME, APPLICATION_URL, 
+      APPLICATION_CONTACT, APPLICATION_CONTACT_PHONE, 
+      APPLICATION_SYNC_FIELDS, APPLICATION_REMARK, 
+      CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, 
+      UPDATE_TIME)
+    values (#{applicationId,jdbcType=BIGINT}, #{applicationName,jdbcType=VARCHAR}, #{applicationUrl,jdbcType=VARCHAR}, 
+      #{applicationContact,jdbcType=VARCHAR}, #{applicationContactPhone,jdbcType=VARCHAR}, 
+      #{applicationSyncFields,jdbcType=BIGINT}, #{applicationRemark,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthApplication" >
+    <selectKey resultType="java.lang.Long" keyProperty="applicationId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_APPLICATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      APPLICATION_ID,
+      <if test="applicationName != null" >
+     APPLICATION_NAME,
+      </if>
+      <if test="applicationUrl != null" >
+        APPLICATION_URL,
+      </if>
+      <if test="applicationContact != null" >
+        APPLICATION_CONTACT,
+      </if>
+      <if test="applicationContactPhone != null" >
+        APPLICATION_CONTACT_PHONE,
+      </if>
+      <if test="applicationSyncFields != null" >
+        APPLICATION_SYNC_FIELDS,
+      </if>
+      <if test="applicationRemark != null" >
+        APPLICATION_REMARK,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{applicationId,jdbcType=BIGINT},
+      <if test="applicationName != null" >
+        #{applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationUrl != null" >
+        #{applicationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationContact != null" >
+        #{applicationContact,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationContactPhone != null" >
+        #{applicationContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationSyncFields != null" >
+        #{applicationSyncFields,jdbcType=BIGINT},
+      </if>
+      <if test="applicationRemark != null" >
+        #{applicationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthApplicationExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_APPLICATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_APPLICATION
+    <set >
+      <if test="record.applicationId != null" >
+        APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicationName != null" >
+        APPLICATION_NAME = #{record.applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationUrl != null" >
+        APPLICATION_URL = #{record.applicationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationContact != null" >
+        APPLICATION_CONTACT = #{record.applicationContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationContactPhone != null" >
+        APPLICATION_CONTACT_PHONE = #{record.applicationContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationSyncFields != null" >
+        APPLICATION_SYNC_FIELDS = #{record.applicationSyncFields,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicationRemark != null" >
+        APPLICATION_REMARK = #{record.applicationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_APPLICATION
+    set APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      APPLICATION_NAME = #{record.applicationName,jdbcType=VARCHAR},
+      APPLICATION_URL = #{record.applicationUrl,jdbcType=VARCHAR},
+      APPLICATION_CONTACT = #{record.applicationContact,jdbcType=VARCHAR},
+      APPLICATION_CONTACT_PHONE = #{record.applicationContactPhone,jdbcType=VARCHAR},
+      APPLICATION_SYNC_FIELDS = #{record.applicationSyncFields,jdbcType=BIGINT},
+      APPLICATION_REMARK = #{record.applicationRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthApplication" >
+    update UAC.AUTH_APPLICATION
+    <set >
+      <if test="applicationName != null" >
+        APPLICATION_NAME = #{applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationUrl != null" >
+        APPLICATION_URL = #{applicationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationContact != null" >
+        APPLICATION_CONTACT = #{applicationContact,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationContactPhone != null" >
+        APPLICATION_CONTACT_PHONE = #{applicationContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationSyncFields != null" >
+        APPLICATION_SYNC_FIELDS = #{applicationSyncFields,jdbcType=BIGINT},
+      </if>
+      <if test="applicationRemark != null" >
+        APPLICATION_REMARK = #{applicationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where APPLICATION_ID = #{applicationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthApplication" >
+    update UAC.AUTH_APPLICATION
+    set APPLICATION_NAME = #{applicationName,jdbcType=VARCHAR},
+      APPLICATION_URL = #{applicationUrl,jdbcType=VARCHAR},
+      APPLICATION_CONTACT = #{applicationContact,jdbcType=VARCHAR},
+      APPLICATION_CONTACT_PHONE = #{applicationContactPhone,jdbcType=VARCHAR},
+      APPLICATION_SYNC_FIELDS = #{applicationSyncFields,jdbcType=BIGINT},
+      APPLICATION_REMARK = #{applicationRemark,jdbcType=VARCHAR},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where APPLICATION_ID = #{applicationId,jdbcType=BIGINT}
+  </update>
+</mapper>

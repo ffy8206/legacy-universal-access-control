@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthOrgUserMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthOrgUser" >
+    <id column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+    <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="USER_ORGWORK_TYPE" property="userOrgworkType" jdbcType="CHAR" />
+    <result column="USER_DISPLAY_ORDER" property="userDisplayOrder" jdbcType="INTEGER" />
+    <result column="USER_ORGDUTY_DICT" property="userOrgdutyDict" jdbcType="INTEGER" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <association property="orgInfo" column="ORG_ID" javaType="com.harry.uac.persistence.AuthOrg">
+	    <id column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+	    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+	    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+	    <result column="ORG_INITIALS" property="orgInitials" jdbcType="VARCHAR" />
+	    <result column="ORG_DESCRIPTION" property="orgDescription" jdbcType="VARCHAR" />
+	    <result column="ORG_STYLE" property="orgStyle" jdbcType="INTEGER" />
+	    <result column="ORG_STATUS" property="orgStatus" jdbcType="INTEGER" />
+	    <result column="ORG_PARENT_ID" property="orgParentId" jdbcType="VARCHAR" />
+	    <result column="ORG_LAYER_CODE" property="orgLayerCode" jdbcType="VARCHAR" />
+	    <result column="ORG_LEVEL_DICT" property="orgLevelDict" jdbcType="INTEGER" />
+	    <result column="ORG_DISPLAY_ORDER" property="orgDisplayOrder" jdbcType="INTEGER" />
+	    <result column="ORG_SUPERVISOR_UID" property="orgSupervisorUid" jdbcType="VARCHAR" />
+	    <result column="ORG_MANAGER_UID" property="orgManagerUid" jdbcType="VARCHAR" />
+	    <result column="ORG_VICE_MANAGER_UID" property="orgViceManagerUid" jdbcType="VARCHAR" />
+	    <result column="ORG_ADMIN_UID" property="orgAdminUid" jdbcType="VARCHAR" />
+	    <result column="ORG_MANAGE_ORG_ID" property="orgManageOrgId" jdbcType="VARCHAR" />
+	    <result column="ORG_POSTAL_ADDRESS" property="orgPostalAddress" jdbcType="VARCHAR" />
+	    <result column="ORG_POSTAL_CODE" property="orgPostalCode" jdbcType="VARCHAR" />
+	    <result column="ORG_TELEPHONE_NUMBER" property="orgTelephoneNumber" jdbcType="VARCHAR" />
+	    <result column="ORG_FAX_NUMBER" property="orgFaxNumber" jdbcType="VARCHAR" />
+	    <result column="ORG_STARTTIME" property="orgStarttime" jdbcType="TIMESTAMP" />
+	    <result column="ORG_ENDTIME" property="orgEndtime" jdbcType="TIMESTAMP" />
+	    <result column="ORG_ERP_ID" property="orgErpId" jdbcType="VARCHAR" />
+	    <result column="ORG_LOCATION" property="orgLocation" jdbcType="VARCHAR" />
+	    <result column="ORG_REMARK" property="orgRemark" jdbcType="VARCHAR" />
+	    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORG_ID, USER_ID, USER_ORGWORK_TYPE, USER_DISPLAY_ORDER, USER_ORGDUTY_DICT, CREATE_USER_ID, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthOrgUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ORG_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthOrgUserKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ORG_USER
+    where ORG_ID = #{orgId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.harry.uac.persistence.AuthOrgUserKey" >
+    delete from UAC.AUTH_ORG_USER
+    where ORG_ID = #{orgId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthOrgUserExample" >
+    delete from UAC.AUTH_ORG_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthOrgUser" >
+    insert into UAC.AUTH_ORG_USER (ORG_ID, USER_ID, USER_ORGWORK_TYPE, 
+      USER_DISPLAY_ORDER, USER_ORGDUTY_DICT, CREATE_USER_ID, 
+      CREATE_TIME)
+    values (#{orgId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userOrgworkType,jdbcType=CHAR}, 
+      #{userDisplayOrder,jdbcType=INTEGER}, #{userOrgdutyDict,jdbcType=INTEGER}, #{createUserId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthOrgUser" >
+    insert into UAC.AUTH_ORG_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userOrgworkType != null" >
+        USER_ORGWORK_TYPE,
+      </if>
+      <if test="userDisplayOrder != null" >
+        USER_DISPLAY_ORDER,
+      </if>
+      <if test="userOrgdutyDict != null" >
+        USER_ORGDUTY_DICT,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userOrgworkType != null" >
+        #{userOrgworkType,jdbcType=CHAR},
+      </if>
+      <if test="userDisplayOrder != null" >
+        #{userDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="userOrgdutyDict != null" >
+        #{userOrgdutyDict,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthOrgUserExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_ORG_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_ORG_USER
+    <set >
+      <if test="record.orgId != null" >
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userOrgworkType != null" >
+        USER_ORGWORK_TYPE = #{record.userOrgworkType,jdbcType=CHAR},
+      </if>
+      <if test="record.userDisplayOrder != null" >
+        USER_DISPLAY_ORDER = #{record.userDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.userOrgdutyDict != null" >
+        USER_ORGDUTY_DICT = #{record.userOrgdutyDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_ORG_USER
+    set ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
+      USER_ORGWORK_TYPE = #{record.userOrgworkType,jdbcType=CHAR},
+      USER_DISPLAY_ORDER = #{record.userDisplayOrder,jdbcType=INTEGER},
+      USER_ORGDUTY_DICT = #{record.userOrgdutyDict,jdbcType=INTEGER},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthOrgUser" >
+    update UAC.AUTH_ORG_USER
+    <set >
+      <if test="userOrgworkType != null" >
+        USER_ORGWORK_TYPE = #{userOrgworkType,jdbcType=CHAR},
+      </if>
+      <if test="userDisplayOrder != null" >
+        USER_DISPLAY_ORDER = #{userDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="userOrgdutyDict != null" >
+        USER_ORGDUTY_DICT = #{userOrgdutyDict,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ORG_ID = #{orgId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthOrgUser" >
+    update UAC.AUTH_ORG_USER
+    set USER_ORGWORK_TYPE = #{userOrgworkType,jdbcType=CHAR},
+      USER_DISPLAY_ORDER = #{userDisplayOrder,jdbcType=INTEGER},
+      USER_ORGDUTY_DICT = #{userOrgdutyDict,jdbcType=INTEGER},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ORG_ID = #{orgId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="Long" >
+    select 
+	    aou.ORG_ID, aou.USER_ID, aou.USER_ORGWORK_TYPE, aou.USER_DISPLAY_ORDER, aou.USER_ORGDUTY_DICT, aou.CREATE_USER_ID, 
+	    aou.CREATE_TIME,
+	    ao.ORG_ID, ao.ORG_NAME, ao.ORG_CODE, ao.ORG_INITIALS, ao.ORG_DESCRIPTION, ao.ORG_STYLE, ao.ORG_STATUS, 
+	    ao.ORG_PARENT_ID, ao.ORG_LAYER_CODE, ao.ORG_LEVEL_DICT, ao.ORG_DISPLAY_ORDER, ao.ORG_SUPERVISOR_UID, 
+	    ao.ORG_MANAGER_UID, ao.ORG_VICE_MANAGER_UID, ao.ORG_ADMIN_UID, ao.ORG_MANAGE_ORG_ID, ao.ORG_POSTAL_ADDRESS, 
+	    ao.ORG_POSTAL_CODE, ao.ORG_TELEPHONE_NUMBER, ao.ORG_FAX_NUMBER, ao.ORG_STARTTIME, ao.ORG_ENDTIME, 
+	    ao.ORG_ERP_ID, ao.ORG_LOCATION, ao.ORG_REMARK, ao.CREATE_USER_ID, ao.CREATE_TIME, ao.UPDATE_USER_ID, 
+	    ao.UPDATE_TIME
+    from UAC.AUTH_ORG_USER aou
+    inner join UAC.AUTH_ORG ao
+    on aou.ORG_ID = ao.ORG_ID
+    where aou.USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.TempUserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.TempUserInfo" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+    <result column="USER_NATION_DICT" property="userNationDict" jdbcType="INTEGER" />
+    <result column="USER_GENDER" property="userGender" jdbcType="INTEGER" />
+    <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="TIMESTAMP" />
+    <result column="USER_NATIONALITY" property="userNationality" jdbcType="VARCHAR" />
+    <result column="USER_RELIGION_DICT" property="userReligionDict" jdbcType="INTEGER" />
+    <result column="USER_TELEPHONE_NUMBER" property="userTelephoneNumber" jdbcType="VARCHAR" />
+    <result column="USER_PREFERRED_MOBILE" property="userPreferredMobile" jdbcType="VARCHAR" />
+    <result column="USER_POSTAL_ADDRESS" property="userPostalAddress" jdbcType="VARCHAR" />
+    <result column="USER_POSTAL_CODE" property="userPostalCode" jdbcType="VARCHAR" />
+    <result column="USER_STARTTIME" property="userStarttime" jdbcType="TIMESTAMP" />
+    <result column="USER_ENDTIME" property="userEndtime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID_CARD_NUMBER" property="userIdCardNumber" jdbcType="VARCHAR" />
+    <result column="USER_EMPLOYEETYPE" property="userEmployeetype" jdbcType="VARCHAR" />
+    <result column="USER_EMPLOYEE_NUMBER" property="userEmployeeNumber" jdbcType="VARCHAR" />
+    <result column="USER_ENTRYTIME" property="userEntrytime" jdbcType="TIMESTAMP" />
+    <result column="USER_LOCATION" property="userLocation" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="DATA_SYNC_TYPE" property="dataSyncType" jdbcType="SMALLINT" />
+    <result column="USER_SYNC_STATUS" property="userSyncStatus" jdbcType="SMALLINT" />
+    <result column="DATA_SOURCE" property="dataSource" jdbcType="SMALLINT" />
+    <result column="DATA_FILE" property="dataFile" jdbcType="VARCHAR" />
+    <result column="DATA_IS_SYNCED" property="dataIsSynced" jdbcType="SMALLINT" />
+  </resultMap>
+  
+  <resultMap id="BaseDisplayResultMap" type="com.harry.uac.persistence.SyncDisplayInfo" >
+    <result column="EMPLOYEE_NUMBER" property="employeeNumber" jdbcType="VARCHAR" />
+    <result column="EMPLOYEE_NAME" property="employeeName" jdbcType="VARCHAR" />
+    <result column="USER_UPDATE" property="userUpdate" jdbcType="VARCHAR" />
+    <result column="USER_SYNC_TYPE" property="userSyncType" jdbcType="VARCHAR" />
+    <result column="USER_CREATE_TIME" property="userCreateTime" jdbcType="VARCHAR" />
+    <result column="ASS_UPDATE" property="assUpdate" jdbcType="VARCHAR" />
+    <result column="ASS_CREATE_TIME" property="assCreateTime" jdbcType="VARCHAR" /> 
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_NAME, USER_EMAIL, USER_NATION_DICT, USER_GENDER, USER_BIRTHDAY, USER_NATIONALITY, 
+    USER_RELIGION_DICT, USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, USER_POSTAL_ADDRESS, 
+    USER_POSTAL_CODE, USER_STARTTIME, USER_ENDTIME, USER_ID_CARD_NUMBER, USER_EMPLOYEETYPE, 
+    USER_EMPLOYEE_NUMBER, USER_ENTRYTIME, USER_LOCATION, CREATE_USER_ID, CREATE_TIME, 
+    UPDATE_USER_ID, UPDATE_TIME, DATA_SYNC_TYPE, USER_SYNC_STATUS, DATA_SOURCE, DATA_FILE, 
+    DATA_IS_SYNCED
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.TempUserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from UAC.TEMP_USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from UAC.TEMP_USER_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.TempUserInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.TEMP_USER_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL,
+      </if>
+      <if test="userNationDict != null" >
+        USER_NATION_DICT,
+      </if>
+      <if test="userGender != null" >
+        USER_GENDER,
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY,
+      </if>
+      <if test="userNationality != null" >
+        USER_NATIONALITY,
+      </if>
+      <if test="userReligionDict != null" >
+        USER_RELIGION_DICT,
+      </if>
+      <if test="userTelephoneNumber != null" >
+        USER_TELEPHONE_NUMBER,
+      </if>
+      <if test="userPreferredMobile != null" >
+        USER_PREFERRED_MOBILE,
+      </if>
+      <if test="userPostalAddress != null" >
+        USER_POSTAL_ADDRESS,
+      </if>
+      <if test="userPostalCode != null" >
+        USER_POSTAL_CODE,
+      </if>
+      <if test="userStarttime != null" >
+        USER_STARTTIME,
+      </if>
+      <if test="userEndtime != null" >
+        USER_ENDTIME,
+      </if>
+      <if test="userIdCardNumber != null" >
+        USER_ID_CARD_NUMBER,
+      </if>
+      <if test="userEmployeetype != null" >
+        USER_EMPLOYEETYPE,
+      </if>
+      <if test="userEmployeeNumber != null" >
+        USER_EMPLOYEE_NUMBER,
+      </if>
+      <if test="userEntrytime != null" >
+        USER_ENTRYTIME,
+      </if>
+      <if test="userLocation != null" >
+        USER_LOCATION,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="dataSyncType != null" >
+        DATA_SYNC_TYPE,
+      </if>
+      <if test="userSyncStatus != null" >
+        USER_SYNC_STATUS,
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE,
+      </if>
+      <if test="dataFile != null" >
+        DATA_FILE,
+      </if>
+      <if test="dataIsSynced != null" >
+        DATA_IS_SYNCED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+	   <if test="userName != null" >
+         #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+         #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userNationDict != null" >
+         #{userNationDict,jdbcType=INTEGER},
+	  </if>
+      <if test="userGender != null" >
+         #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userNationality != null" >
+        #{userNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="userReligionDict != null" >
+        #{userReligionDict,jdbcType=INTEGER},
+      </if>
+      <if test="userTelephoneNumber != null" >
+        #{userTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPreferredMobile != null" >
+        #{userPreferredMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalAddress != null" >
+        #{userPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalCode != null" >
+        #{userPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userStarttime != null" >
+        #{userStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEndtime != null" >
+        #{userEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIdCardNumber != null" >
+        #{userIdCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmployeetype != null" >
+        #{userEmployeetype,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmployeeNumber != null" >
+        #{userEmployeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userEntrytime != null" >
+        #{userEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLocation != null" >
+        #{userLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataSyncType != null" >
+        #{dataSyncType,jdbcType=SMALLINT},
+      </if>
+      <if test="userSyncStatus != null" >
+        #{userSyncStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="dataSource != null" >
+        #{dataSource,jdbcType=SMALLINT},
+      </if>
+      <if test="dataFile != null" >
+        #{dataFile,jdbcType=VARCHAR},
+      </if>
+      <if test="dataIsSynced != null" >
+        #{dataIsSynced,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+   <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.TempUserInfo" >
+    update UAC.TEMP_USER_INFO
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userNationDict != null" >
+        USER_NATION_DICT = #{userNationDict,jdbcType=INTEGER},
+      </if>
+      <if test="userGender != null" >
+        USER_GENDER = #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY = #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userNationality != null" >
+        USER_NATIONALITY = #{userNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="userReligionDict != null" >
+        USER_RELIGION_DICT = #{userReligionDict,jdbcType=INTEGER},
+      </if>
+      <if test="userTelephoneNumber != null" >
+        USER_TELEPHONE_NUMBER = #{userTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPreferredMobile != null" >
+        USER_PREFERRED_MOBILE = #{userPreferredMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalAddress != null" >
+        USER_POSTAL_ADDRESS = #{userPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalCode != null" >
+        USER_POSTAL_CODE = #{userPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userStarttime != null" >
+        USER_STARTTIME = #{userStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEndtime != null" >
+        USER_ENDTIME = #{userEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIdCardNumber != null" >
+        USER_ID_CARD_NUMBER = #{userIdCardNumber,jdbcType=VARCHAR},
+      </if>
+	  <if test="userEmployeetype != null" >
+        USER_EMPLOYEETYPE = #{userEmployeetype,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmployeeNumber != null" >
+        USER_EMPLOYEE_NUMBER = #{userEmployeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userEntrytime != null" >
+        USER_ENTRYTIME = #{userEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLocation != null" >
+        USER_LOCATION = #{userLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+	   <if test="dataSyncType != null" >
+        DATA_SYNC_TYPE = #{dataSyncType, jdbcType=SMALLINT},
+      </if>
+      <if test="userSyncStatus != null" >
+        USER_SYNC_STATUS = #{userSyncStatus, jdbcType=SMALLINT},
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE = #{dataSource, jdbcType=SMALLINT},
+      </if>
+      <if test="dataFile != null" >
+        DATA_FILE = #{dataFile, jdbcType=VARCHAR},
+      </if>
+      <if test="dataIsSynced != null" >
+        DATA_IS_SYNCED = #{dataIsSynced, jdbcType=SMALLINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="countByExample" parameterType="com.harry.uac.persistence.TempUserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.TEMP_USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectPaginationByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.TempUserInfoExample" >
+  select <include refid="Base_Column_List" /> from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    
+    from UAC.TEMP_USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}  
+  </select>
+  
+  
+  <sql id="selectBasicWaitSyncUserFrom" >
+	  <![CDATA[
+		from 
+		(select USER_EMPLOYEE_NUMBER AS EMPLOYEE_NUMBER, CREATE_TIME from UAC.TEMP_USER_INFO WHERE DATA_IS_SYNCED <> 1
+		UNION
+		select EMPLOYEE_NUMBER AS EMPLOYEE_NUMBER, CREATE_TIME  from UAC.TEMP_USER_ASSIGN WHERE DATA_IS_SYNCED <> 1
+		) AS CHANGE_INFO 
+		LEFT JOIN UAC.TEMP_USER_INFO tui
+		 ON CHANGE_INFO.EMPLOYEE_NUMBER = tui.USER_EMPLOYEE_NUMBER
+		 AND CHANGE_INFO.CREATE_TIME = tui.CREATE_TIME
+		LEFT JOIN
+		 (SELECT EMPLOYEE_NUMBER, CREATE_TIME FROM
+		   UAC.TEMP_USER_ASSIGN GROUP BY EMPLOYEE_NUMBER, CREATE_TIME, DATA_IS_SYNCED) tua 
+		  ON CHANGE_INFO.EMPLOYEE_NUMBER = tua.EMPLOYEE_NUMBER
+		  AND CHANGE_INFO.CREATE_TIME = tua.CREATE_TIME
+		INNER JOIN UAC.EMP_PEOPLE_INFO epi
+		ON epi.EMPLOYEE_NUMBER = CHANGE_INFO.EMPLOYEE_NUMBER
+		]]>
+  </sql>
+  
+  <select id="selectWaitSyncUserCount" resultType="java.lang.Integer">
+	select count(*) 
+	<include refid="selectBasicWaitSyncUserFrom" />
+  </select>
+  
+  <select id="selectWaitSyncUserPagination" resultMap="BaseDisplayResultMap" parameterType="com.harry.uac.persistence.TempUserInfoExample" >
+	  SELECT * FROM (
+	  	select tui.ID AS ID, epi.EMPLOYEE_NUMBER AS EMPLOYEE_NUMBER, epi.EMPLOYEE_NAME AS EMPLOYEE_NAME , 
+		       tui.USER_EMPLOYEE_NUMBER AS USER_UPDATE, tui.DATA_SYNC_TYPE AS USER_SYNC_TYPE, tui.CREATE_TIME AS USER_CREATE_TIME, 
+		       tua.EMPLOYEE_NUMBER AS ASS_UPDATE, tua.CREATE_TIME AS ASS_CREATE_TIME
+		<include refid="selectBasicWaitSyncUserFrom" />
+	  ) AS TEMP LIMIT ${page.begin - 1}, ${page.end}
+  </select>  
+  
+  <update id="updateIsSyncedStatus" parameterType="map">
+  	UPDATE UAC.TEMP_USER_INFO
+  	SET DATA_IS_SYNCED = 1
+  	WHERE ID IN 
+  	<foreach item="id" collection="userList" 
+			    open="(" separator="," close=")"> 
+			      #{id} 
+	</foreach> 
+  </update>
+  
+  <update id="disableSyncUsers" parameterType="map">
+  	UPDATE UAC.EMP_PEOPLE_INFO
+  	SET SYNC_STATUS = 3
+  	WHERE EMPLOYEE_NUMBER IN (select USER_EMPLOYEE_NUMBER
+	      from UAC.TEMP_USER_INFO 
+	      where DATA_IS_SYNCED != 1
+	      AND ID IN 
+			<foreach item="id" collection="userList" 
+			    open="(" separator="," close=")"> 
+			      #{id} 
+			</foreach>)
+  </update>
+  
+</mapper>

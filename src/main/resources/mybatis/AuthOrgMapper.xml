@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthOrgMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthOrg" >
+    <id column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_INITIALS" property="orgInitials" jdbcType="VARCHAR" />
+    <result column="ORG_DESCRIPTION" property="orgDescription" jdbcType="VARCHAR" />
+    <result column="ORG_STYLE" property="orgStyle" jdbcType="INTEGER" />
+    <result column="ORG_STATUS" property="orgStatus" jdbcType="INTEGER" />
+    <result column="ORG_PARENT_ID" property="orgParentId" jdbcType="VARCHAR" />
+    <result column="ORG_LAYER_CODE" property="orgLayerCode" jdbcType="VARCHAR" />
+    <result column="ORG_LEVEL_DICT" property="orgLevelDict" jdbcType="INTEGER" />
+    <result column="ORG_DISPLAY_ORDER" property="orgDisplayOrder" jdbcType="INTEGER" />
+    <result column="ORG_SUPERVISOR_UID" property="orgSupervisorUid" jdbcType="VARCHAR" />
+    <result column="ORG_MANAGER_UID" property="orgManagerUid" jdbcType="VARCHAR" />
+    <result column="ORG_VICE_MANAGER_UID" property="orgViceManagerUid" jdbcType="VARCHAR" />
+    <result column="ORG_ADMIN_UID" property="orgAdminUid" jdbcType="VARCHAR" />
+    <result column="ORG_MANAGE_ORG_ID" property="orgManageOrgId" jdbcType="VARCHAR" />
+    <result column="ORG_POSTAL_ADDRESS" property="orgPostalAddress" jdbcType="VARCHAR" />
+    <result column="ORG_POSTAL_CODE" property="orgPostalCode" jdbcType="VARCHAR" />
+    <result column="ORG_TELEPHONE_NUMBER" property="orgTelephoneNumber" jdbcType="VARCHAR" />
+    <result column="ORG_FAX_NUMBER" property="orgFaxNumber" jdbcType="VARCHAR" />
+    <result column="ORG_STARTTIME" property="orgStarttime" jdbcType="TIMESTAMP" />
+    <result column="ORG_ENDTIME" property="orgEndtime" jdbcType="TIMESTAMP" />
+    <result column="ORG_ERP_ID" property="orgErpId" jdbcType="VARCHAR" />
+    <result column="ORG_LOCATION" property="orgLocation" jdbcType="VARCHAR" />
+    <result column="ORG_REMARK" property="orgRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORG_ID, ORG_NAME, ORG_CODE, ORG_INITIALS, ORG_DESCRIPTION, ORG_STYLE, ORG_STATUS, 
+    ORG_PARENT_ID, ORG_LAYER_CODE, ORG_LEVEL_DICT, ORG_DISPLAY_ORDER, ORG_SUPERVISOR_UID, 
+    ORG_MANAGER_UID, ORG_VICE_MANAGER_UID, ORG_ADMIN_UID, ORG_MANAGE_ORG_ID, ORG_POSTAL_ADDRESS, 
+    ORG_POSTAL_CODE, ORG_TELEPHONE_NUMBER, ORG_FAX_NUMBER, ORG_STARTTIME, ORG_ENDTIME, 
+    ORG_ERP_ID, ORG_LOCATION, ORG_REMARK, CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthOrgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectPaginationByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthOrgExample" >
+  select <include refid="Base_Column_List" /> from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    
+    from UAC.AUTH_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}  
+  </select>  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ORG
+    where ORG_ID = #{orgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete A from UAC.AUTH_ORG A
+    where A.ORG_ID = #{orgId,jdbcType=BIGINT}
+    and not exists(
+    select 1 from UAC.auth_org_user B where B.ORG_ID = A.ORG_ID
+    )
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthOrgExample" >
+    delete from UAC.AUTH_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthOrg" >
+    <selectKey keyProperty="orgId" resultType="java.lang.Long" order="AFTER"> 
+    	SELECT LAST_INSERT_ID()
+  	</selectKey>
+    insert into UAC.AUTH_ORG (ORG_ID, ORG_NAME, ORG_CODE, 
+      ORG_INITIALS, ORG_DESCRIPTION, ORG_STYLE, 
+      ORG_STATUS, ORG_PARENT_ID, ORG_LAYER_CODE, 
+      ORG_LEVEL_DICT, ORG_DISPLAY_ORDER, ORG_SUPERVISOR_UID, 
+      ORG_MANAGER_UID, ORG_VICE_MANAGER_UID, ORG_ADMIN_UID, 
+      ORG_MANAGE_ORG_ID, ORG_POSTAL_ADDRESS, ORG_POSTAL_CODE, 
+      ORG_TELEPHONE_NUMBER, ORG_FAX_NUMBER, ORG_STARTTIME, 
+      ORG_ENDTIME, ORG_ERP_ID, ORG_LOCATION, 
+      ORG_REMARK, CREATE_USER_ID, CREATE_TIME, 
+      UPDATE_USER_ID, UPDATE_TIME)
+    values (#{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{orgInitials,jdbcType=VARCHAR}, #{orgDescription,jdbcType=VARCHAR}, #{orgStyle,jdbcType=INTEGER}, 
+      #{orgStatus,jdbcType=INTEGER}, #{orgParentId,jdbcType=VARCHAR}, #{orgLayerCode,jdbcType=VARCHAR}, 
+      #{orgLevelDict,jdbcType=INTEGER}, #{orgDisplayOrder,jdbcType=INTEGER}, #{orgSupervisorUid,jdbcType=VARCHAR}, 
+      #{orgManagerUid,jdbcType=VARCHAR}, #{orgViceManagerUid,jdbcType=VARCHAR}, #{orgAdminUid,jdbcType=VARCHAR}, 
+      #{orgManageOrgId,jdbcType=VARCHAR}, #{orgPostalAddress,jdbcType=VARCHAR}, #{orgPostalCode,jdbcType=VARCHAR}, 
+      #{orgTelephoneNumber,jdbcType=VARCHAR}, #{orgFaxNumber,jdbcType=VARCHAR}, #{orgStarttime,jdbcType=TIMESTAMP}, 
+      #{orgEndtime,jdbcType=TIMESTAMP}, #{orgErpId,jdbcType=VARCHAR}, #{orgLocation,jdbcType=VARCHAR}, 
+      #{orgRemark,jdbcType=VARCHAR}, #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthOrgExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthOrg" >
+    update UAC.AUTH_ORG
+    <set >
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInitials != null" >
+        ORG_INITIALS = #{orgInitials,jdbcType=VARCHAR},
+      </if>
+      <if test="orgDescription != null" >
+        ORG_DESCRIPTION = #{orgDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="orgStyle != null" >
+        ORG_STYLE = #{orgStyle,jdbcType=INTEGER},
+      </if>
+      <if test="orgStatus != null" >
+        ORG_STATUS = #{orgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orgParentId != null" >
+        ORG_PARENT_ID = #{orgParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLayerCode != null" >
+        ORG_LAYER_CODE = #{orgLayerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevelDict != null" >
+        ORG_LEVEL_DICT = #{orgLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="orgDisplayOrder != null" >
+        ORG_DISPLAY_ORDER = #{orgDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="orgSupervisorUid != null" >
+        ORG_SUPERVISOR_UID = #{orgSupervisorUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgManagerUid != null" >
+        ORG_MANAGER_UID = #{orgManagerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgViceManagerUid != null" >
+        ORG_VICE_MANAGER_UID = #{orgViceManagerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAdminUid != null" >
+        ORG_ADMIN_UID = #{orgAdminUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgManageOrgId != null" >
+        ORG_MANAGE_ORG_ID = #{orgManageOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPostalAddress != null" >
+        ORG_POSTAL_ADDRESS = #{orgPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPostalCode != null" >
+        ORG_POSTAL_CODE = #{orgPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTelephoneNumber != null" >
+        ORG_TELEPHONE_NUMBER = #{orgTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFaxNumber != null" >
+        ORG_FAX_NUMBER = #{orgFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgStarttime != null" >
+        ORG_STARTTIME = #{orgStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgEndtime != null" >
+        ORG_ENDTIME = #{orgEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgErpId != null" >
+        ORG_ERP_ID = #{orgErpId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLocation != null" >
+        ORG_LOCATION = #{orgLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="orgRemark != null" >
+        ORG_REMARK = #{orgRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ORG_ID = #{orgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthOrg" >
+    update UAC.AUTH_ORG
+    set ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_INITIALS = #{orgInitials,jdbcType=VARCHAR},
+      ORG_DESCRIPTION = #{orgDescription,jdbcType=VARCHAR},
+      ORG_STYLE = #{orgStyle,jdbcType=INTEGER},
+      ORG_STATUS = #{orgStatus,jdbcType=INTEGER},
+      ORG_PARENT_ID = #{orgParentId,jdbcType=VARCHAR},
+      ORG_LAYER_CODE = #{orgLayerCode,jdbcType=VARCHAR},
+      ORG_LEVEL_DICT = #{orgLevelDict,jdbcType=INTEGER},
+      ORG_DISPLAY_ORDER = #{orgDisplayOrder,jdbcType=INTEGER},
+      ORG_SUPERVISOR_UID = #{orgSupervisorUid,jdbcType=VARCHAR},
+      ORG_MANAGER_UID = #{orgManagerUid,jdbcType=VARCHAR},
+      ORG_VICE_MANAGER_UID = #{orgViceManagerUid,jdbcType=VARCHAR},
+      ORG_ADMIN_UID = #{orgAdminUid,jdbcType=VARCHAR},
+      ORG_MANAGE_ORG_ID = #{orgManageOrgId,jdbcType=VARCHAR},
+      ORG_POSTAL_ADDRESS = #{orgPostalAddress,jdbcType=VARCHAR},
+      ORG_POSTAL_CODE = #{orgPostalCode,jdbcType=VARCHAR},
+      ORG_TELEPHONE_NUMBER = #{orgTelephoneNumber,jdbcType=VARCHAR},
+      ORG_FAX_NUMBER = #{orgFaxNumber,jdbcType=VARCHAR},
+      ORG_STARTTIME = #{orgStarttime,jdbcType=TIMESTAMP},
+      ORG_ENDTIME = #{orgEndtime,jdbcType=TIMESTAMP},
+      ORG_ERP_ID = #{orgErpId,jdbcType=VARCHAR},
+      ORG_LOCATION = #{orgLocation,jdbcType=VARCHAR},
+      ORG_REMARK = #{orgRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ORG_ID = #{orgId,jdbcType=BIGINT}
+  </update>
+  <select id="selectChildOrgs" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select ORG_ID, ORG_NAME, ORG_CODE, ORG_PARENT_ID, ORG_LAYER_CODE from UAC.AUTH_ORG where ORG_PARENT_ID = #{orgCode, jdbcType=VARCHAR}
+  </select>
+  <select id="maxLayerCode" resultType="string" parameterType="java.lang.String">
+  	select max(ORG_LAYER_CODE) from UAC.AUTH_ORG where ORG_LAYER_CODE like #{_parameter}
+  </select>
+</mapper>

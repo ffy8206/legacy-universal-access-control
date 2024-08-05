@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.ViewAuthOrgUserMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.ViewAuthOrgUser" >
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_UID" property="userUid" jdbcType="VARCHAR" />
+    <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR" />
+    <result column="USER_SURNAME" property="userSurname" jdbcType="VARCHAR" />
+    <result column="USER_DESCRIPTION" property="userDescription" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+    <result column="USER_NATION_DICT" property="userNationDict" jdbcType="INTEGER" />
+    <result column="USER_GENDER" property="userGender" jdbcType="INTEGER" />
+    <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="TIMESTAMP" />
+    <result column="USER_NATIONALITY" property="userNationality" jdbcType="VARCHAR" />
+    <result column="USER_RELIGION_DICT" property="userReligionDict" jdbcType="INTEGER" />
+    <result column="USER_TELEPHONE_NUMBER" property="userTelephoneNumber" jdbcType="VARCHAR" />
+    <result column="USER_PREFERRED_MOBILE" property="userPreferredMobile" jdbcType="VARCHAR" />
+    <result column="USER_POSTAL_ADDRESS" property="userPostalAddress" jdbcType="VARCHAR" />
+    <result column="USER_POSTAL_CODE" property="userPostalCode" jdbcType="VARCHAR" />
+    <result column="USER_FAX_NUMBER" property="userFaxNumber" jdbcType="VARCHAR" />
+    <result column="USER_STARTTIME" property="userStarttime" jdbcType="TIMESTAMP" />
+    <result column="USER_ENDTIME" property="userEndtime" jdbcType="TIMESTAMP" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="INTEGER" />
+    <result column="USER_PWD_MODIFIED_DATE" property="userPwdModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="USER_ID_CARD_NUMBER" property="userIdCardNumber" jdbcType="VARCHAR" />
+    <result column="USER_USERTYPE" property="userUsertype" jdbcType="CHAR" />
+    <result column="USER_EMPLOYEE_NUMBER" property="userEmployeeNumber" jdbcType="VARCHAR" />
+    <result column="USER_LEVEL_DICT" property="userLevelDict" jdbcType="INTEGER" />
+    <result column="USER_CATEGORY" property="userCategory" jdbcType="INTEGER" />
+    <result column="USER_ENTRYTIME" property="userEntrytime" jdbcType="TIMESTAMP" />
+    <result column="USER_POSITION_LEVEL_DICT" property="userPositionLevelDict" jdbcType="INTEGER" />
+    <result column="USER_LOCATION" property="userLocation" jdbcType="VARCHAR" />
+    <result column="USER_REMARK" property="userRemark" jdbcType="VARCHAR" />
+    <result column="USER_EMPLOYEETYPE" property="userEmployeetype" jdbcType="CHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_INITIALS" property="orgInitials" jdbcType="VARCHAR" />
+    <result column="ORG_DESCRIPTION" property="orgDescription" jdbcType="VARCHAR" />
+    <result column="ORG_STYLE" property="orgStyle" jdbcType="INTEGER" />
+    <result column="ORG_STATUS" property="orgStatus" jdbcType="INTEGER" />
+    <result column="ORG_PARENT_ID" property="orgParentId" jdbcType="VARCHAR" />
+    <result column="ORG_LAYER_CODE" property="orgLayerCode" jdbcType="VARCHAR" />
+    <result column="ORG_LEVEL_DICT" property="orgLevelDict" jdbcType="INTEGER" />
+    <result column="ORG_DISPLAY_ORDER" property="orgDisplayOrder" jdbcType="INTEGER" />
+    <result column="ORG_SUPERVISOR_UID" property="orgSupervisorUid" jdbcType="VARCHAR" />
+    <result column="ORG_MANAGER_UID" property="orgManagerUid" jdbcType="VARCHAR" />
+    <result column="ORG_VICE_MANAGER_UID" property="orgViceManagerUid" jdbcType="VARCHAR" />
+    <result column="ORG_ADMIN_UID" property="orgAdminUid" jdbcType="VARCHAR" />
+    <result column="ORG_MANAGE_ORG_ID" property="orgManageOrgId" jdbcType="VARCHAR" />
+    <result column="ORG_POSTAL_ADDRESS" property="orgPostalAddress" jdbcType="VARCHAR" />
+    <result column="ORG_POSTAL_CODE" property="orgPostalCode" jdbcType="VARCHAR" />
+    <result column="ORG_TELEPHONE_NUMBER" property="orgTelephoneNumber" jdbcType="VARCHAR" />
+    <result column="ORG_FAX_NUMBER" property="orgFaxNumber" jdbcType="VARCHAR" />
+    <result column="ORG_STARTTIME" property="orgStarttime" jdbcType="TIMESTAMP" />
+    <result column="ORG_ENDTIME" property="orgEndtime" jdbcType="TIMESTAMP" />
+    <result column="ORG_ERP_ID" property="orgErpId" jdbcType="VARCHAR" />
+    <result column="ORG_LOCATION" property="orgLocation" jdbcType="VARCHAR" />
+    <result column="ORG_REMARK" property="orgRemark" jdbcType="VARCHAR" />
+    <result column="USER_ORGWORK_TYPE" property="userOrgworkType" jdbcType="CHAR" />
+    <result column="USER_DISPLAY_ORDER" property="userDisplayOrder" jdbcType="INTEGER" />
+    <result column="USER_ORGDUTY_DICT" property="userOrgdutyDict" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_ID, USER_NAME, USER_UID, USER_PASSWORD, USER_SURNAME, USER_DESCRIPTION, USER_EMAIL, 
+    USER_NATION_DICT, USER_GENDER, USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+    USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, USER_POSTAL_ADDRESS, USER_POSTAL_CODE, 
+    USER_FAX_NUMBER, USER_STARTTIME, USER_ENDTIME, USER_STATUS, USER_PWD_MODIFIED_DATE, 
+    USER_ID_CARD_NUMBER, USER_USERTYPE, USER_EMPLOYEE_NUMBER, USER_LEVEL_DICT, USER_CATEGORY, 
+    USER_ENTRYTIME, USER_POSITION_LEVEL_DICT, USER_LOCATION, USER_REMARK, USER_EMPLOYEETYPE, 
+    ORG_ID, ORG_NAME, ORG_CODE, ORG_INITIALS, ORG_DESCRIPTION, ORG_STYLE, ORG_STATUS, 
+    ORG_PARENT_ID, ORG_LAYER_CODE, ORG_LEVEL_DICT, ORG_DISPLAY_ORDER, ORG_SUPERVISOR_UID, 
+    ORG_MANAGER_UID, ORG_VICE_MANAGER_UID, ORG_ADMIN_UID, ORG_MANAGE_ORG_ID, ORG_POSTAL_ADDRESS, 
+    ORG_POSTAL_CODE, ORG_TELEPHONE_NUMBER, ORG_FAX_NUMBER, ORG_STARTTIME, ORG_ENDTIME, 
+    ORG_ERP_ID, ORG_LOCATION, ORG_REMARK, USER_ORGWORK_TYPE, USER_DISPLAY_ORDER, USER_ORGDUTY_DICT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.VIEW_AUTH_ORG_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" >
+    delete from UAC.VIEW_AUTH_ORG_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.ViewAuthOrgUser" >
+    insert into UAC.VIEW_AUTH_ORG_USER (USER_ID, USER_NAME, USER_UID, 
+      USER_PASSWORD, USER_SURNAME, USER_DESCRIPTION, 
+      USER_EMAIL, USER_NATION_DICT, USER_GENDER, 
+      USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+      USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, 
+      USER_POSTAL_ADDRESS, USER_POSTAL_CODE, USER_FAX_NUMBER, 
+      USER_STARTTIME, USER_ENDTIME, USER_STATUS, 
+      USER_PWD_MODIFIED_DATE, USER_ID_CARD_NUMBER, 
+      USER_USERTYPE, USER_EMPLOYEE_NUMBER, USER_LEVEL_DICT, 
+      USER_CATEGORY, USER_ENTRYTIME, USER_POSITION_LEVEL_DICT, 
+      USER_LOCATION, USER_REMARK, USER_EMPLOYEETYPE, 
+      ORG_ID, ORG_NAME, ORG_CODE, 
+      ORG_INITIALS, ORG_DESCRIPTION, ORG_STYLE, 
+      ORG_STATUS, ORG_PARENT_ID, ORG_LAYER_CODE, 
+      ORG_LEVEL_DICT, ORG_DISPLAY_ORDER, ORG_SUPERVISOR_UID, 
+      ORG_MANAGER_UID, ORG_VICE_MANAGER_UID, ORG_ADMIN_UID, 
+      ORG_MANAGE_ORG_ID, ORG_POSTAL_ADDRESS, ORG_POSTAL_CODE, 
+      ORG_TELEPHONE_NUMBER, ORG_FAX_NUMBER, ORG_STARTTIME, 
+      ORG_ENDTIME, ORG_ERP_ID, ORG_LOCATION, 
+      ORG_REMARK, USER_ORGWORK_TYPE, USER_DISPLAY_ORDER, 
+      USER_ORGDUTY_DICT)
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userUid,jdbcType=VARCHAR}, 
+      #{userPassword,jdbcType=VARCHAR}, #{userSurname,jdbcType=VARCHAR}, #{userDescription,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{userNationDict,jdbcType=INTEGER}, #{userGender,jdbcType=INTEGER}, 
+      #{userBirthday,jdbcType=TIMESTAMP}, #{userNationality,jdbcType=VARCHAR}, #{userReligionDict,jdbcType=INTEGER}, 
+      #{userTelephoneNumber,jdbcType=VARCHAR}, #{userPreferredMobile,jdbcType=VARCHAR}, 
+      #{userPostalAddress,jdbcType=VARCHAR}, #{userPostalCode,jdbcType=VARCHAR}, #{userFaxNumber,jdbcType=VARCHAR}, 
+      #{userStarttime,jdbcType=TIMESTAMP}, #{userEndtime,jdbcType=TIMESTAMP}, #{userStatus,jdbcType=INTEGER}, 
+      #{userPwdModifiedDate,jdbcType=TIMESTAMP}, #{userIdCardNumber,jdbcType=VARCHAR}, 
+      #{userUsertype,jdbcType=CHAR}, #{userEmployeeNumber,jdbcType=VARCHAR}, #{userLevelDict,jdbcType=INTEGER}, 
+      #{userCategory,jdbcType=INTEGER}, #{userEntrytime,jdbcType=TIMESTAMP}, #{userPositionLevelDict,jdbcType=INTEGER}, 
+      #{userLocation,jdbcType=VARCHAR}, #{userRemark,jdbcType=VARCHAR}, #{userEmployeetype,jdbcType=CHAR}, 
+      #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{orgInitials,jdbcType=VARCHAR}, #{orgDescription,jdbcType=VARCHAR}, #{orgStyle,jdbcType=INTEGER}, 
+      #{orgStatus,jdbcType=INTEGER}, #{orgParentId,jdbcType=VARCHAR}, #{orgLayerCode,jdbcType=VARCHAR}, 
+      #{orgLevelDict,jdbcType=INTEGER}, #{orgDisplayOrder,jdbcType=INTEGER}, #{orgSupervisorUid,jdbcType=VARCHAR}, 
+      #{orgManagerUid,jdbcType=VARCHAR}, #{orgViceManagerUid,jdbcType=VARCHAR}, #{orgAdminUid,jdbcType=VARCHAR}, 
+      #{orgManageOrgId,jdbcType=VARCHAR}, #{orgPostalAddress,jdbcType=VARCHAR}, #{orgPostalCode,jdbcType=VARCHAR}, 
+      #{orgTelephoneNumber,jdbcType=VARCHAR}, #{orgFaxNumber,jdbcType=VARCHAR}, #{orgStarttime,jdbcType=TIMESTAMP}, 
+      #{orgEndtime,jdbcType=TIMESTAMP}, #{orgErpId,jdbcType=VARCHAR}, #{orgLocation,jdbcType=VARCHAR}, 
+      #{orgRemark,jdbcType=VARCHAR}, #{userOrgworkType,jdbcType=CHAR}, #{userDisplayOrder,jdbcType=INTEGER}, 
+      #{userOrgdutyDict,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.ViewAuthOrgUser" >
+    insert into UAC.VIEW_AUTH_ORG_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userUid != null" >
+        USER_UID,
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD,
+      </if>
+      <if test="userSurname != null" >
+        USER_SURNAME,
+      </if>
+      <if test="userDescription != null" >
+        USER_DESCRIPTION,
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL,
+      </if>
+      <if test="userNationDict != null" >
+        USER_NATION_DICT,
+      </if>
+      <if test="userGender != null" >
+        USER_GENDER,
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY,
+      </if>
+      <if test="userNationality != null" >
+        USER_NATIONALITY,
+      </if>
+      <if test="userReligionDict != null" >
+        USER_RELIGION_DICT,
+      </if>
+      <if test="userTelephoneNumber != null" >
+        USER_TELEPHONE_NUMBER,
+      </if>
+      <if test="userPreferredMobile != null" >
+        USER_PREFERRED_MOBILE,
+      </if>
+      <if test="userPostalAddress != null" >
+        USER_POSTAL_ADDRESS,
+      </if>
+      <if test="userPostalCode != null" >
+        USER_POSTAL_CODE,
+      </if>
+      <if test="userFaxNumber != null" >
+        USER_FAX_NUMBER,
+      </if>
+      <if test="userStarttime != null" >
+        USER_STARTTIME,
+      </if>
+      <if test="userEndtime != null" >
+        USER_ENDTIME,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
+      </if>
+      <if test="userPwdModifiedDate != null" >
+        USER_PWD_MODIFIED_DATE,
+      </if>
+      <if test="userIdCardNumber != null" >
+        USER_ID_CARD_NUMBER,
+      </if>
+      <if test="userUsertype != null" >
+        USER_USERTYPE,
+      </if>
+      <if test="userEmployeeNumber != null" >
+        USER_EMPLOYEE_NUMBER,
+      </if>
+      <if test="userLevelDict != null" >
+        USER_LEVEL_DICT,
+      </if>
+      <if test="userCategory != null" >
+        USER_CATEGORY,
+      </if>
+      <if test="userEntrytime != null" >
+        USER_ENTRYTIME,
+      </if>
+      <if test="userPositionLevelDict != null" >
+        USER_POSITION_LEVEL_DICT,
+      </if>
+      <if test="userLocation != null" >
+        USER_LOCATION,
+      </if>
+      <if test="userRemark != null" >
+        USER_REMARK,
+      </if>
+      <if test="userEmployeetype != null" >
+        USER_EMPLOYEETYPE,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="orgInitials != null" >
+        ORG_INITIALS,
+      </if>
+      <if test="orgDescription != null" >
+        ORG_DESCRIPTION,
+      </if>
+      <if test="orgStyle != null" >
+        ORG_STYLE,
+      </if>
+      <if test="orgStatus != null" >
+        ORG_STATUS,
+      </if>
+      <if test="orgParentId != null" >
+        ORG_PARENT_ID,
+      </if>
+      <if test="orgLayerCode != null" >
+        ORG_LAYER_CODE,
+      </if>
+      <if test="orgLevelDict != null" >
+        ORG_LEVEL_DICT,
+      </if>
+      <if test="orgDisplayOrder != null" >
+        ORG_DISPLAY_ORDER,
+      </if>
+      <if test="orgSupervisorUid != null" >
+        ORG_SUPERVISOR_UID,
+      </if>
+      <if test="orgManagerUid != null" >
+        ORG_MANAGER_UID,
+      </if>
+      <if test="orgViceManagerUid != null" >
+        ORG_VICE_MANAGER_UID,
+      </if>
+      <if test="orgAdminUid != null" >
+        ORG_ADMIN_UID,
+      </if>
+      <if test="orgManageOrgId != null" >
+        ORG_MANAGE_ORG_ID,
+      </if>
+      <if test="orgPostalAddress != null" >
+        ORG_POSTAL_ADDRESS,
+      </if>
+      <if test="orgPostalCode != null" >
+        ORG_POSTAL_CODE,
+      </if>
+      <if test="orgTelephoneNumber != null" >
+        ORG_TELEPHONE_NUMBER,
+      </if>
+      <if test="orgFaxNumber != null" >
+        ORG_FAX_NUMBER,
+      </if>
+      <if test="orgStarttime != null" >
+        ORG_STARTTIME,
+      </if>
+      <if test="orgEndtime != null" >
+        ORG_ENDTIME,
+      </if>
+      <if test="orgErpId != null" >
+        ORG_ERP_ID,
+      </if>
+      <if test="orgLocation != null" >
+        ORG_LOCATION,
+      </if>
+      <if test="orgRemark != null" >
+        ORG_REMARK,
+      </if>
+      <if test="userOrgworkType != null" >
+        USER_ORGWORK_TYPE,
+      </if>
+      <if test="userDisplayOrder != null" >
+        USER_DISPLAY_ORDER,
+      </if>
+      <if test="userOrgdutyDict != null" >
+        USER_ORGDUTY_DICT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userUid != null" >
+        #{userUid,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userSurname != null" >
+        #{userSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="userDescription != null" >
+        #{userDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userNationDict != null" >
+        #{userNationDict,jdbcType=INTEGER},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userNationality != null" >
+        #{userNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="userReligionDict != null" >
+        #{userReligionDict,jdbcType=INTEGER},
+      </if>
+      <if test="userTelephoneNumber != null" >
+        #{userTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPreferredMobile != null" >
+        #{userPreferredMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalAddress != null" >
+        #{userPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalCode != null" >
+        #{userPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userFaxNumber != null" >
+        #{userFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userStarttime != null" >
+        #{userStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEndtime != null" >
+        #{userEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userPwdModifiedDate != null" >
+        #{userPwdModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIdCardNumber != null" >
+        #{userIdCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userUsertype != null" >
+        #{userUsertype,jdbcType=CHAR},
+      </if>
+      <if test="userEmployeeNumber != null" >
+        #{userEmployeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevelDict != null" >
+        #{userLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="userCategory != null" >
+        #{userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="userEntrytime != null" >
+        #{userEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userPositionLevelDict != null" >
+        #{userPositionLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="userLocation != null" >
+        #{userLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="userRemark != null" >
+        #{userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmployeetype != null" >
+        #{userEmployeetype,jdbcType=CHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInitials != null" >
+        #{orgInitials,jdbcType=VARCHAR},
+      </if>
+      <if test="orgDescription != null" >
+        #{orgDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="orgStyle != null" >
+        #{orgStyle,jdbcType=INTEGER},
+      </if>
+      <if test="orgStatus != null" >
+        #{orgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orgParentId != null" >
+        #{orgParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLayerCode != null" >
+        #{orgLayerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevelDict != null" >
+        #{orgLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="orgDisplayOrder != null" >
+        #{orgDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="orgSupervisorUid != null" >
+        #{orgSupervisorUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgManagerUid != null" >
+        #{orgManagerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgViceManagerUid != null" >
+        #{orgViceManagerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAdminUid != null" >
+        #{orgAdminUid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgManageOrgId != null" >
+        #{orgManageOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPostalAddress != null" >
+        #{orgPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPostalCode != null" >
+        #{orgPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTelephoneNumber != null" >
+        #{orgTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFaxNumber != null" >
+        #{orgFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgStarttime != null" >
+        #{orgStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgEndtime != null" >
+        #{orgEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgErpId != null" >
+        #{orgErpId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLocation != null" >
+        #{orgLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="orgRemark != null" >
+        #{orgRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userOrgworkType != null" >
+        #{userOrgworkType,jdbcType=CHAR},
+      </if>
+      <if test="userDisplayOrder != null" >
+        #{userDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="userOrgdutyDict != null" >
+        #{userOrgdutyDict,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.VIEW_AUTH_ORG_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+       and USER_ORGWORK_TYPE='M'
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.VIEW_AUTH_ORG_USER
+    <set >
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userUid != null" >
+        USER_UID = #{record.userUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSurname != null" >
+        USER_SURNAME = #{record.userSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userDescription != null" >
+        USER_DESCRIPTION = #{record.userDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userNationDict != null" >
+        USER_NATION_DICT = #{record.userNationDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userGender != null" >
+        USER_GENDER = #{record.userGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.userBirthday != null" >
+        USER_BIRTHDAY = #{record.userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userNationality != null" >
+        USER_NATIONALITY = #{record.userNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userReligionDict != null" >
+        USER_RELIGION_DICT = #{record.userReligionDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userTelephoneNumber != null" >
+        USER_TELEPHONE_NUMBER = #{record.userTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPreferredMobile != null" >
+        USER_PREFERRED_MOBILE = #{record.userPreferredMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPostalAddress != null" >
+        USER_POSTAL_ADDRESS = #{record.userPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPostalCode != null" >
+        USER_POSTAL_CODE = #{record.userPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFaxNumber != null" >
+        USER_FAX_NUMBER = #{record.userFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStarttime != null" >
+        USER_STARTTIME = #{record.userStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userEndtime != null" >
+        USER_ENDTIME = #{record.userEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userStatus != null" >
+        USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.userPwdModifiedDate != null" >
+        USER_PWD_MODIFIED_DATE = #{record.userPwdModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userIdCardNumber != null" >
+        USER_ID_CARD_NUMBER = #{record.userIdCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userUsertype != null" >
+        USER_USERTYPE = #{record.userUsertype,jdbcType=CHAR},
+      </if>
+      <if test="record.userEmployeeNumber != null" >
+        USER_EMPLOYEE_NUMBER = #{record.userEmployeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLevelDict != null" >
+        USER_LEVEL_DICT = #{record.userLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userCategory != null" >
+        USER_CATEGORY = #{record.userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.userEntrytime != null" >
+        USER_ENTRYTIME = #{record.userEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userPositionLevelDict != null" >
+        USER_POSITION_LEVEL_DICT = #{record.userPositionLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userLocation != null" >
+        USER_LOCATION = #{record.userLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userRemark != null" >
+        USER_REMARK = #{record.userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmployeetype != null" >
+        USER_EMPLOYEETYPE = #{record.userEmployeetype,jdbcType=CHAR},
+      </if>
+      <if test="record.orgId != null" >
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null" >
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgInitials != null" >
+        ORG_INITIALS = #{record.orgInitials,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgDescription != null" >
+        ORG_DESCRIPTION = #{record.orgDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgStyle != null" >
+        ORG_STYLE = #{record.orgStyle,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgStatus != null" >
+        ORG_STATUS = #{record.orgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgParentId != null" >
+        ORG_PARENT_ID = #{record.orgParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgLayerCode != null" >
+        ORG_LAYER_CODE = #{record.orgLayerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgLevelDict != null" >
+        ORG_LEVEL_DICT = #{record.orgLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgDisplayOrder != null" >
+        ORG_DISPLAY_ORDER = #{record.orgDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgSupervisorUid != null" >
+        ORG_SUPERVISOR_UID = #{record.orgSupervisorUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgManagerUid != null" >
+        ORG_MANAGER_UID = #{record.orgManagerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgViceManagerUid != null" >
+        ORG_VICE_MANAGER_UID = #{record.orgViceManagerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAdminUid != null" >
+        ORG_ADMIN_UID = #{record.orgAdminUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgManageOrgId != null" >
+        ORG_MANAGE_ORG_ID = #{record.orgManageOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgPostalAddress != null" >
+        ORG_POSTAL_ADDRESS = #{record.orgPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgPostalCode != null" >
+        ORG_POSTAL_CODE = #{record.orgPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgTelephoneNumber != null" >
+        ORG_TELEPHONE_NUMBER = #{record.orgTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFaxNumber != null" >
+        ORG_FAX_NUMBER = #{record.orgFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgStarttime != null" >
+        ORG_STARTTIME = #{record.orgStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgEndtime != null" >
+        ORG_ENDTIME = #{record.orgEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgErpId != null" >
+        ORG_ERP_ID = #{record.orgErpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgLocation != null" >
+        ORG_LOCATION = #{record.orgLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgRemark != null" >
+        ORG_REMARK = #{record.orgRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userOrgworkType != null" >
+        USER_ORGWORK_TYPE = #{record.userOrgworkType,jdbcType=CHAR},
+      </if>
+      <if test="record.userDisplayOrder != null" >
+        USER_DISPLAY_ORDER = #{record.userDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.userOrgdutyDict != null" >
+        USER_ORGDUTY_DICT = #{record.userOrgdutyDict,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.VIEW_AUTH_ORG_USER
+    set USER_ID = #{record.userId,jdbcType=BIGINT},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      USER_UID = #{record.userUid,jdbcType=VARCHAR},
+      USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      USER_SURNAME = #{record.userSurname,jdbcType=VARCHAR},
+      USER_DESCRIPTION = #{record.userDescription,jdbcType=VARCHAR},
+      USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      USER_NATION_DICT = #{record.userNationDict,jdbcType=INTEGER},
+      USER_GENDER = #{record.userGender,jdbcType=INTEGER},
+      USER_BIRTHDAY = #{record.userBirthday,jdbcType=TIMESTAMP},
+      USER_NATIONALITY = #{record.userNationality,jdbcType=VARCHAR},
+      USER_RELIGION_DICT = #{record.userReligionDict,jdbcType=INTEGER},
+      USER_TELEPHONE_NUMBER = #{record.userTelephoneNumber,jdbcType=VARCHAR},
+      USER_PREFERRED_MOBILE = #{record.userPreferredMobile,jdbcType=VARCHAR},
+      USER_POSTAL_ADDRESS = #{record.userPostalAddress,jdbcType=VARCHAR},
+      USER_POSTAL_CODE = #{record.userPostalCode,jdbcType=VARCHAR},
+      USER_FAX_NUMBER = #{record.userFaxNumber,jdbcType=VARCHAR},
+      USER_STARTTIME = #{record.userStarttime,jdbcType=TIMESTAMP},
+      USER_ENDTIME = #{record.userEndtime,jdbcType=TIMESTAMP},
+      USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
+      USER_PWD_MODIFIED_DATE = #{record.userPwdModifiedDate,jdbcType=TIMESTAMP},
+      USER_ID_CARD_NUMBER = #{record.userIdCardNumber,jdbcType=VARCHAR},
+      USER_USERTYPE = #{record.userUsertype,jdbcType=CHAR},
+      USER_EMPLOYEE_NUMBER = #{record.userEmployeeNumber,jdbcType=VARCHAR},
+      USER_LEVEL_DICT = #{record.userLevelDict,jdbcType=INTEGER},
+      USER_CATEGORY = #{record.userCategory,jdbcType=INTEGER},
+      USER_ENTRYTIME = #{record.userEntrytime,jdbcType=TIMESTAMP},
+      USER_POSITION_LEVEL_DICT = #{record.userPositionLevelDict,jdbcType=INTEGER},
+      USER_LOCATION = #{record.userLocation,jdbcType=VARCHAR},
+      USER_REMARK = #{record.userRemark,jdbcType=VARCHAR},
+      USER_EMPLOYEETYPE = #{record.userEmployeetype,jdbcType=CHAR},
+      ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      ORG_INITIALS = #{record.orgInitials,jdbcType=VARCHAR},
+      ORG_DESCRIPTION = #{record.orgDescription,jdbcType=VARCHAR},
+      ORG_STYLE = #{record.orgStyle,jdbcType=INTEGER},
+      ORG_STATUS = #{record.orgStatus,jdbcType=INTEGER},
+      ORG_PARENT_ID = #{record.orgParentId,jdbcType=VARCHAR},
+      ORG_LAYER_CODE = #{record.orgLayerCode,jdbcType=VARCHAR},
+      ORG_LEVEL_DICT = #{record.orgLevelDict,jdbcType=INTEGER},
+      ORG_DISPLAY_ORDER = #{record.orgDisplayOrder,jdbcType=INTEGER},
+      ORG_SUPERVISOR_UID = #{record.orgSupervisorUid,jdbcType=VARCHAR},
+      ORG_MANAGER_UID = #{record.orgManagerUid,jdbcType=VARCHAR},
+      ORG_VICE_MANAGER_UID = #{record.orgViceManagerUid,jdbcType=VARCHAR},
+      ORG_ADMIN_UID = #{record.orgAdminUid,jdbcType=VARCHAR},
+      ORG_MANAGE_ORG_ID = #{record.orgManageOrgId,jdbcType=VARCHAR},
+      ORG_POSTAL_ADDRESS = #{record.orgPostalAddress,jdbcType=VARCHAR},
+      ORG_POSTAL_CODE = #{record.orgPostalCode,jdbcType=VARCHAR},
+      ORG_TELEPHONE_NUMBER = #{record.orgTelephoneNumber,jdbcType=VARCHAR},
+      ORG_FAX_NUMBER = #{record.orgFaxNumber,jdbcType=VARCHAR},
+      ORG_STARTTIME = #{record.orgStarttime,jdbcType=TIMESTAMP},
+      ORG_ENDTIME = #{record.orgEndtime,jdbcType=TIMESTAMP},
+      ORG_ERP_ID = #{record.orgErpId,jdbcType=VARCHAR},
+      ORG_LOCATION = #{record.orgLocation,jdbcType=VARCHAR},
+      ORG_REMARK = #{record.orgRemark,jdbcType=VARCHAR},
+      USER_ORGWORK_TYPE = #{record.userOrgworkType,jdbcType=CHAR},
+      USER_DISPLAY_ORDER = #{record.userDisplayOrder,jdbcType=INTEGER},
+      USER_ORGDUTY_DICT = #{record.userOrgdutyDict,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectPaginationByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" >
+   select <include refid="Base_Column_List" /> from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    
+    from UAC.VIEW_AUTH_ORG_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+      and USER_ORGWORK_TYPE='M'
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}
+  </select>
+  <select id="selectPaginationUsersForGroupByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" >
+    SELECT * FROM (
+	    SELECT B.USER_ID,B.USER_NAME,B.USER_UID,B.USER_SURNAME,B.USER_GENDER,
+		B.USER_TELEPHONE_NUMBER,B.USER_PREFERRED_MOBILE,B.ORG_ID,B.ORG_NAME,
+		B.ORG_CODE,	B.ORG_LAYER_CODE 
+		FROM UAC.AUTH_USER_GROUP A INNER JOIN UAC.VIEW_AUTH_ORG_USER B ON A.USER_ID=B.USER_ID
+		WHERE B.USER_ORGWORK_TYPE='M' AND A.GROUP_ID=${group.groupId} AND B.ORG_LAYER_CODE LIKE '${org.orgLayerCode}'  
+		<if test="user.userName!=null and user.userName!=''" >
+      		 AND B.USER_NAME LIKE '${user.userName}'
+	    </if>
+	    <if test="user.userUid!=null and user.userUid!=''" >
+	   		 AND B.USER_UID='${user.userUid}'
+	    </if>  
+	) AS TEMP LIMIT ${page.begin - 1}, ${page.length}
+  </select>
+  <select id="countUsersForGroupByExample" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" resultType="java.lang.Integer" >
+    SELECT COUNT(*)
+	FROM UAC.AUTH_USER_GROUP A INNER JOIN UAC.VIEW_AUTH_ORG_USER B ON A.USER_ID=B.USER_ID
+	WHERE B.USER_ORGWORK_TYPE='M' AND A.GROUP_ID=${group.groupId} AND B.ORG_LAYER_CODE LIKE '${org.orgLayerCode}'  
+		<if test="user.userName!=null and user.userName!=''" >
+      		 AND B.USER_NAME LIKE '${user.userName}'
+	    </if>
+	    <if test="user.userUid!=null and user.userUid!=''" >
+	   		 AND B.USER_UID='${user.userUid}'
+	    </if>  
+  </select>
+  <select id="selectPaginationRemainingUsersForGroupByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" >
+    SELECT * FROM (
+    SELECT B.USER_ID,B.USER_NAME,B.USER_UID,B.USER_SURNAME,B.USER_GENDER,
+    B.USER_TELEPHONE_NUMBER,B.USER_PREFERRED_MOBILE,B.ORG_ID,B.ORG_NAME,
+    B.ORG_CODE,	B.ORG_LAYER_CODE 
+    FROM UAC.VIEW_AUTH_ORG_USER B
+    WHERE B.USER_ORGWORK_TYPE='M' AND B.ORG_LAYER_CODE LIKE '${org.orgLayerCode}'  
+		<if test="user.userName!=null and user.userName!=''" >
+      		 AND B.USER_NAME LIKE '${user.userName}'
+	    </if>
+	    <if test="user.userUid!=null and user.userUid!=''" >
+	   		 AND B.USER_UID='${user.userUid}'
+	    </if>  
+    AND NOT EXISTS
+    (SELECT 1 FROM UAC.AUTH_USER_GROUP A WHERE A.GROUP_ID=${group.groupId} AND A.USER_ID=B.USER_ID)
+	) AS TEMP LIMIT ${page.begin - 1}, ${page.end}
+  </select>
+  <select id="countRemainingUsersForGroupByExample" parameterType="com.harry.uac.persistence.ViewAuthOrgUserExample" resultType="java.lang.Integer" >
+    SELECT COUNT(*)
+	FROM UAC.VIEW_AUTH_ORG_USER B
+    WHERE B.USER_ORGWORK_TYPE='M' AND B.ORG_LAYER_CODE LIKE '${org.orgLayerCode}'  
+		<if test="user.userName!=null and user.userName!=''" >
+      		 AND B.USER_NAME LIKE '${user.userName}'
+	    </if>
+	    <if test="user.userUid!=null and user.userUid!=''" >
+	   		 AND B.USER_UID='${user.userUid}'
+	    </if>  
+    AND NOT EXISTS
+    (SELECT 1 FROM UAC.AUTH_USER_GROUP A WHERE A.GROUP_ID=${group.groupId} AND A.USER_ID=B.USER_ID)
+  </select>
+</mapper>

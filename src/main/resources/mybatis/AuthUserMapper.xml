@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthUserMapper" >
+  <resultMap id="BaseResultMap.AuthUser" type="com.harry.uac.persistence.AuthUser" >
+    <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_FIRSTNAME" property="userFirstname" jdbcType="VARCHAR" />
+    <result column="USER_LASTNAME" property="userLastname" jdbcType="VARCHAR" />
+    <result column="USER_UID" property="userUid" jdbcType="VARCHAR" />
+    <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR" />
+    <result column="USER_SALT" property="userSalt" jdbcType="VARCHAR" />
+    <result column="USER_SURNAME" property="userSurname" jdbcType="VARCHAR" />
+    <result column="USER_DESCRIPTION" property="userDescription" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+    <result column="USER_NATION_DICT" property="userNationDict" jdbcType="INTEGER" />
+    <result column="USER_GENDER" property="userGender" jdbcType="INTEGER" />
+    <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="TIMESTAMP" />
+    <result column="USER_NATIONALITY" property="userNationality" jdbcType="VARCHAR" />
+    <result column="USER_RELIGION_DICT" property="userReligionDict" jdbcType="INTEGER" />
+    <result column="USER_TELEPHONE_NUMBER" property="userTelephoneNumber" jdbcType="VARCHAR" />
+    <result column="USER_PREFERRED_MOBILE" property="userPreferredMobile" jdbcType="VARCHAR" />
+    <result column="USER_POSTAL_ADDRESS" property="userPostalAddress" jdbcType="VARCHAR" />
+    <result column="USER_POSTAL_CODE" property="userPostalCode" jdbcType="VARCHAR" />
+    <result column="USER_FAX_NUMBER" property="userFaxNumber" jdbcType="VARCHAR" />
+    <result column="USER_STARTTIME" property="userStarttime" jdbcType="TIMESTAMP" />
+    <result column="USER_ENDTIME" property="userEndtime" jdbcType="TIMESTAMP" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="INTEGER" />
+    <result column="USER_PWD_MODIFIED_DATE" property="userPwdModifiedDate" jdbcType="TIMESTAMP" />
+    <result column="USER_ID_CARD_NUMBER" property="userIdCardNumber" jdbcType="VARCHAR" />
+    <result column="USER_USERTYPE" property="userUsertype" jdbcType="CHAR" />
+    <result column="USER_EMPLOYEE_NUMBER" property="userEmployeeNumber" jdbcType="VARCHAR" />
+    <result column="USER_LEVEL_DICT" property="userLevelDict" jdbcType="INTEGER" />
+    <result column="USER_CATEGORY" property="userCategory" jdbcType="INTEGER" />
+    <result column="USER_ENTRYTIME" property="userEntrytime" jdbcType="TIMESTAMP" />
+    <result column="USER_POSITION_LEVEL_DICT" property="userPositionLevelDict" jdbcType="INTEGER" />
+    <result column="USER_LOCATION" property="userLocation" jdbcType="VARCHAR" />
+    <result column="USER_REMARK" property="userRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="USER_EMPLOYEETYPE" property="userEmployeetype" jdbcType="VARCHAR" />
+ 	<result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP" />
+	<result column="PASSWORD_MODIFY_FLAG" property="passwordMofidyFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.harry.uac.persistence.AuthUser" extends="BaseResultMap.AuthUser" >
+    <result column="USER_PHOTO" property="userPhoto" jdbcType="BLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_ID, USER_NAME, USER_FIRSTNAME, USER_LASTNAME, USER_UID, USER_PASSWORD, USER_SALT, USER_SURNAME, USER_DESCRIPTION, USER_EMAIL, 
+    USER_NATION_DICT, USER_GENDER, USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+    USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, USER_POSTAL_ADDRESS, USER_POSTAL_CODE, 
+    USER_FAX_NUMBER, USER_STARTTIME, USER_ENDTIME, USER_STATUS, USER_PWD_MODIFIED_DATE, 
+    USER_ID_CARD_NUMBER, USER_USERTYPE, USER_EMPLOYEE_NUMBER, USER_LEVEL_DICT, USER_CATEGORY, 
+    USER_ENTRYTIME, USER_POSITION_LEVEL_DICT, USER_LOCATION, USER_REMARK, CREATE_USER_ID, 
+    CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME, USER_EMPLOYEETYPE, LAST_LOGIN_TIME, PASSWORD_MODIFY_FLAG
+  </sql>
+  <sql id="Blob_Column_List" >
+    USER_PHOTO
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.harry.uac.persistence.AuthUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from UAC.AUTH_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap.AuthUser" parameterType="com.harry.uac.persistence.AuthUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from UAC.AUTH_USER
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.AUTH_USER
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthUserExample" >
+    delete from UAC.AUTH_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthUser" >
+    <selectKey resultType="java.lang.Long" keyProperty="userId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_USER (USER_ID, USER_NAME, USER_FIRSTNAME, USER_LASTNAME, USER_UID, 
+      USER_PASSWORD, USER_SALT, USER_SURNAME, USER_DESCRIPTION, 
+      USER_EMAIL, USER_NATION_DICT, USER_GENDER, 
+      USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+      USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, 
+      USER_POSTAL_ADDRESS, USER_POSTAL_CODE, USER_FAX_NUMBER, 
+      USER_STARTTIME, USER_ENDTIME, USER_STATUS, 
+      USER_PWD_MODIFIED_DATE, USER_ID_CARD_NUMBER, 
+      USER_USERTYPE, USER_EMPLOYEE_NUMBER, USER_LEVEL_DICT, 
+      USER_CATEGORY, USER_ENTRYTIME, USER_POSITION_LEVEL_DICT, 
+      USER_LOCATION, USER_REMARK, CREATE_USER_ID, 
+      CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME, USER_EMPLOYEETYPE,
+      USER_PHOTO, LAST_LOGIN_TIME, PASSWORD_MODIFY_FLAG)
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userFirstname,jdbcType=VARCHAR}, #{userLastname,jdbcType=VARCHAR}, 
+      #{userUid,jdbcType=VARCHAR}, 
+      #{userPassword,jdbcType=VARCHAR},#{userSalt,jdbcType=VARCHAR}, #{userSurname,jdbcType=VARCHAR}, #{userDescription,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{userNationDict,jdbcType=INTEGER}, #{userGender,jdbcType=INTEGER}, 
+      #{userBirthday,jdbcType=TIMESTAMP}, #{userNationality,jdbcType=VARCHAR}, #{userReligionDict,jdbcType=INTEGER}, 
+      #{userTelephoneNumber,jdbcType=VARCHAR}, #{userPreferredMobile,jdbcType=VARCHAR}, 
+      #{userPostalAddress,jdbcType=VARCHAR}, #{userPostalCode,jdbcType=VARCHAR}, #{userFaxNumber,jdbcType=VARCHAR}, 
+      #{userStarttime,jdbcType=TIMESTAMP}, #{userEndtime,jdbcType=TIMESTAMP}, #{userStatus,jdbcType=INTEGER}, 
+      #{userPwdModifiedDate,jdbcType=TIMESTAMP}, #{userIdCardNumber,jdbcType=VARCHAR}, 
+      #{userUsertype,jdbcType=CHAR}, #{userEmployeeNumber,jdbcType=VARCHAR}, #{userLevelDict,jdbcType=INTEGER}, 
+      #{userCategory,jdbcType=INTEGER}, #{userEntrytime,jdbcType=TIMESTAMP}, #{userPositionLevelDict,jdbcType=INTEGER}, 
+      #{userLocation,jdbcType=VARCHAR}, #{userRemark,jdbcType=VARCHAR}, #{createUserId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{userEmployeetype, jdbcType=VARCHAR},
+      #{userPhoto,jdbcType=BLOB},
+	  #{lastLoginTime, jdbcType=TIMESTAMP},
+	  #{passwordMofidyFlag, jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthUser" >
+    <selectKey resultType="java.lang.Long" keyProperty="userId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      USER_ID,
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userFirstname != null" >
+        USER_FIRSTNAME,
+      </if>
+      <if test="userLastname != null" >
+        USER_LASTNAME,
+      </if>
+      <if test="userUid != null" >
+        USER_UID,
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD,
+      </if>
+      <if test="userSalt != null" >
+        USER_SALT,
+      </if>
+      <if test="userSurname != null" >
+        USER_SURNAME,
+      </if>
+      <if test="userDescription != null" >
+        USER_DESCRIPTION,
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL,
+      </if>
+      <if test="userNationDict != null" >
+        USER_NATION_DICT,
+      </if>
+      <if test="userGender != null" >
+        USER_GENDER,
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY,
+      </if>
+      <if test="userNationality != null" >
+        USER_NATIONALITY,
+      </if>
+      <if test="userReligionDict != null" >
+        USER_RELIGION_DICT,
+      </if>
+      <if test="userTelephoneNumber != null" >
+        USER_TELEPHONE_NUMBER,
+      </if>
+      <if test="userPreferredMobile != null" >
+        USER_PREFERRED_MOBILE,
+      </if>
+      <if test="userPostalAddress != null" >
+        USER_POSTAL_ADDRESS,
+      </if>
+      <if test="userPostalCode != null" >
+        USER_POSTAL_CODE,
+      </if>
+      <if test="userFaxNumber != null" >
+        USER_FAX_NUMBER,
+      </if>
+      <if test="userStarttime != null" >
+        USER_STARTTIME,
+      </if>
+      <if test="userEndtime != null" >
+        USER_ENDTIME,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
+      </if>
+      <if test="userPwdModifiedDate != null" >
+        USER_PWD_MODIFIED_DATE,
+      </if>
+      <if test="userIdCardNumber != null" >
+        USER_ID_CARD_NUMBER,
+      </if>
+      <if test="userUsertype != null" >
+        USER_USERTYPE,
+      </if>
+      <if test="userEmployeeNumber != null" >
+        USER_EMPLOYEE_NUMBER,
+      </if>
+      <if test="userLevelDict != null" >
+        USER_LEVEL_DICT,
+      </if>
+      <if test="userCategory != null" >
+        USER_CATEGORY,
+      </if>
+      <if test="userEntrytime != null" >
+        USER_ENTRYTIME,
+      </if>
+      <if test="userPositionLevelDict != null" >
+        USER_POSITION_LEVEL_DICT,
+      </if>
+      <if test="userLocation != null" >
+        USER_LOCATION,
+      </if>
+      <if test="userRemark != null" >
+        USER_REMARK,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="userEmployeetype != null" >
+      	USER_EMPLOYEETYPE, 
+      </if> 
+      <if test="userPhoto != null" >
+        USER_PHOTO,
+      </if>
+	  <if test="lastLoginTime != null">
+	  	LAST_LOGIN_TIME,
+	  </if>
+	  <if test="passwordMofidyFlag != null">
+	  	PASSWORD_MODIFY_FLAG,
+	  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{userId,jdbcType=BIGINT},
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userFirstname != null" >
+        #{userFirstname,jdbcType=VARCHAR},
+      </if>
+      <if test="userLastname != null" >
+        #{userLastname,jdbcType=VARCHAR},
+      </if>
+      <if test="userUid != null" >
+        #{userUid,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userSalt != null" >
+        #{userSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="userSurname != null" >
+        #{userSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="userDescription != null" >
+        #{userDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userNationDict != null" >
+        #{userNationDict,jdbcType=INTEGER},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userNationality != null" >
+        #{userNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="userReligionDict != null" >
+        #{userReligionDict,jdbcType=INTEGER},
+      </if>
+      <if test="userTelephoneNumber != null" >
+        #{userTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPreferredMobile != null" >
+        #{userPreferredMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalAddress != null" >
+        #{userPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalCode != null" >
+        #{userPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userFaxNumber != null" >
+        #{userFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userStarttime != null" >
+        #{userStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEndtime != null" >
+        #{userEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userPwdModifiedDate != null" >
+        #{userPwdModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIdCardNumber != null" >
+        #{userIdCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userUsertype != null" >
+        #{userUsertype,jdbcType=CHAR},
+      </if>
+      <if test="userEmployeeNumber != null" >
+        #{userEmployeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevelDict != null" >
+        #{userLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="userCategory != null" >
+        #{userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="userEntrytime != null" >
+        #{userEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userPositionLevelDict != null" >
+        #{userPositionLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="userLocation != null" >
+        #{userLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="userRemark != null" >
+        #{userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEmployeetype != null" >
+      	#{userEmployeetype,jdbcType=VARCHAR}, 
+      </if> 
+      <if test="userPhoto != null" >
+        #{userPhoto,jdbcType=BLOB},
+      </if>
+	  <if test="lastLoginTime != null" >
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+	  <if test="passwordMofidyFlag != null" >
+        #{passwordMofidyFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthUserExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_USER
+    <set >
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFirstname != null" >
+        USER_FIRSTNAME = #{record.userFirstname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLastname != null" >
+        USER_LASTNAME = #{record.userLastname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userUid != null" >
+        USER_UID = #{record.userUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSalt != null" >
+        USER_SALT = #{record.userSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSurname != null" >
+        USER_SURNAME = #{record.userSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userDescription != null" >
+        USER_DESCRIPTION = #{record.userDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userNationDict != null" >
+        USER_NATION_DICT = #{record.userNationDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userGender != null" >
+        USER_GENDER = #{record.userGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.userBirthday != null" >
+        USER_BIRTHDAY = #{record.userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userNationality != null" >
+        USER_NATIONALITY = #{record.userNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userReligionDict != null" >
+        USER_RELIGION_DICT = #{record.userReligionDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userTelephoneNumber != null" >
+        USER_TELEPHONE_NUMBER = #{record.userTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPreferredMobile != null" >
+        USER_PREFERRED_MOBILE = #{record.userPreferredMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPostalAddress != null" >
+        USER_POSTAL_ADDRESS = #{record.userPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPostalCode != null" >
+        USER_POSTAL_CODE = #{record.userPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFaxNumber != null" >
+        USER_FAX_NUMBER = #{record.userFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStarttime != null" >
+        USER_STARTTIME = #{record.userStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userEndtime != null" >
+        USER_ENDTIME = #{record.userEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userStatus != null" >
+        USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.userPwdModifiedDate != null" >
+        USER_PWD_MODIFIED_DATE = #{record.userPwdModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userIdCardNumber != null" >
+        USER_ID_CARD_NUMBER = #{record.userIdCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userUsertype != null" >
+        USER_USERTYPE = #{record.userUsertype,jdbcType=CHAR},
+      </if>
+      <if test="record.userEmployeeNumber != null" >
+        USER_EMPLOYEE_NUMBER = #{record.userEmployeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLevelDict != null" >
+        USER_LEVEL_DICT = #{record.userLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userCategory != null" >
+        USER_CATEGORY = #{record.userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.userEntrytime != null" >
+        USER_ENTRYTIME = #{record.userEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userPositionLevelDict != null" >
+        USER_POSITION_LEVEL_DICT = #{record.userPositionLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="record.userLocation != null" >
+        USER_LOCATION = #{record.userLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userRemark != null" >
+        USER_REMARK = #{record.userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userEmployeetype != null" >
+      	USER_EMPLOYEETYPE = #{record.userEmployeetype,jdbcType=VARCHAR}, 
+      </if> 
+      <if test="record.userPhoto != null" >
+        USER_PHOTO = #{record.userPhoto,jdbcType=BLOB},
+      </if>
+	  <if test="record.lastLoginTime != null" >
+        LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+	  <if test="record.passwordMofidyFlag != null" >
+        PASSWORD_MODIFY_FLAG = #{record.passwordMofidyFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update UAC.AUTH_USER
+    set USER_ID = #{record.userId,jdbcType=BIGINT},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      USER_FIRSTNAME = #{record.userFirstname,jdbcType=VARCHAR},
+      USER_LASTNAME = #{record.userLastname,jdbcType=VARCHAR},
+      USER_UID = #{record.userUid,jdbcType=VARCHAR},
+      USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      USER_SALT = #{record.userSalt,jdbcType=VARCHAR},
+      USER_SURNAME = #{record.userSurname,jdbcType=VARCHAR},
+      USER_DESCRIPTION = #{record.userDescription,jdbcType=VARCHAR},
+      USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      USER_NATION_DICT = #{record.userNationDict,jdbcType=INTEGER},
+      USER_GENDER = #{record.userGender,jdbcType=INTEGER},
+      USER_BIRTHDAY = #{record.userBirthday,jdbcType=TIMESTAMP},
+      USER_NATIONALITY = #{record.userNationality,jdbcType=VARCHAR},
+      USER_RELIGION_DICT = #{record.userReligionDict,jdbcType=INTEGER},
+      USER_TELEPHONE_NUMBER = #{record.userTelephoneNumber,jdbcType=VARCHAR},
+      USER_PREFERRED_MOBILE = #{record.userPreferredMobile,jdbcType=VARCHAR},
+      USER_POSTAL_ADDRESS = #{record.userPostalAddress,jdbcType=VARCHAR},
+      USER_POSTAL_CODE = #{record.userPostalCode,jdbcType=VARCHAR},
+      USER_FAX_NUMBER = #{record.userFaxNumber,jdbcType=VARCHAR},
+      USER_STARTTIME = #{record.userStarttime,jdbcType=TIMESTAMP},
+      USER_ENDTIME = #{record.userEndtime,jdbcType=TIMESTAMP},
+      USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
+      USER_PWD_MODIFIED_DATE = #{record.userPwdModifiedDate,jdbcType=TIMESTAMP},
+      USER_ID_CARD_NUMBER = #{record.userIdCardNumber,jdbcType=VARCHAR},
+      USER_USERTYPE = #{record.userUsertype,jdbcType=CHAR},
+      USER_EMPLOYEE_NUMBER = #{record.userEmployeeNumber,jdbcType=VARCHAR},
+      USER_LEVEL_DICT = #{record.userLevelDict,jdbcType=INTEGER},
+      USER_CATEGORY = #{record.userCategory,jdbcType=INTEGER},
+      USER_ENTRYTIME = #{record.userEntrytime,jdbcType=TIMESTAMP},
+      USER_POSITION_LEVEL_DICT = #{record.userPositionLevelDict,jdbcType=INTEGER},
+      USER_LOCATION = #{record.userLocation,jdbcType=VARCHAR},
+      USER_REMARK = #{record.userRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      USER_EMPLOYEETYPE = #{record.userEmployeetype,jdbcType=VARCHAR}, 
+      USER_PHOTO = #{record.userPhoto,jdbcType=BLOB},
+	  LAST_LOGIN_TIME = #{record.lastLoginTime, jdbcType=TIMESTAMP},
+	  PASSWORD_MODIFY_FLAG = #{record.passwordModifyFlag, jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_USER
+    set USER_ID = #{record.userId,jdbcType=BIGINT},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      USER_FIRSTNAME = #{record.userFirstname,jdbcType=VARCHAR},
+      USER_LASTNAME = #{record.userLastname,jdbcType=VARCHAR},
+      USER_UID = #{record.userUid,jdbcType=VARCHAR},
+      USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      USER_SALT = #{record.userSalt,jdbcType=VARCHAR},
+      USER_SURNAME = #{record.userSurname,jdbcType=VARCHAR},
+      USER_DESCRIPTION = #{record.userDescription,jdbcType=VARCHAR},
+      USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      USER_NATION_DICT = #{record.userNationDict,jdbcType=INTEGER},
+      USER_GENDER = #{record.userGender,jdbcType=INTEGER},
+      USER_BIRTHDAY = #{record.userBirthday,jdbcType=TIMESTAMP},
+      USER_NATIONALITY = #{record.userNationality,jdbcType=VARCHAR},
+      USER_RELIGION_DICT = #{record.userReligionDict,jdbcType=INTEGER},
+      USER_TELEPHONE_NUMBER = #{record.userTelephoneNumber,jdbcType=VARCHAR},
+      USER_PREFERRED_MOBILE = #{record.userPreferredMobile,jdbcType=VARCHAR},
+      USER_POSTAL_ADDRESS = #{record.userPostalAddress,jdbcType=VARCHAR},
+      USER_POSTAL_CODE = #{record.userPostalCode,jdbcType=VARCHAR},
+      USER_FAX_NUMBER = #{record.userFaxNumber,jdbcType=VARCHAR},
+      USER_STARTTIME = #{record.userStarttime,jdbcType=TIMESTAMP},
+      USER_ENDTIME = #{record.userEndtime,jdbcType=TIMESTAMP},
+      USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
+      USER_PWD_MODIFIED_DATE = #{record.userPwdModifiedDate,jdbcType=TIMESTAMP},
+      USER_ID_CARD_NUMBER = #{record.userIdCardNumber,jdbcType=VARCHAR},
+      USER_USERTYPE = #{record.userUsertype,jdbcType=CHAR},
+      USER_EMPLOYEE_NUMBER = #{record.userEmployeeNumber,jdbcType=VARCHAR},
+      USER_LEVEL_DICT = #{record.userLevelDict,jdbcType=INTEGER},
+      USER_CATEGORY = #{record.userCategory,jdbcType=INTEGER},
+      USER_ENTRYTIME = #{record.userEntrytime,jdbcType=TIMESTAMP},
+      USER_POSITION_LEVEL_DICT = #{record.userPositionLevelDict,jdbcType=INTEGER},
+      USER_LOCATION = #{record.userLocation,jdbcType=VARCHAR},
+      USER_REMARK = #{record.userRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      USER_EMPLOYEETYPE = #{record.userEmployeetype,jdbcType=VARCHAR},
+	  LAST_LOGIN_TIME = #{record.lastLoginTime, jdbcType=TIMESTAMP},
+	  PASSWORD_MODIFY_FLAG = #{record.passwordModifyFlag, jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthUser" >
+    update UAC.AUTH_USER
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userFirstname != null" >
+        USER_FIRSTNAME = #{userFirstname,jdbcType=VARCHAR},
+      </if>
+      <if test="userLastname != null" >
+        USER_LASTNAME = #{userLastname,jdbcType=VARCHAR},
+      </if>
+      <if test="userUid != null" >
+        USER_UID = #{userUid,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userSalt != null" >
+        USER_SALT = #{userSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="userSurname != null" >
+        USER_SURNAME = #{userSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="userDescription != null" >
+        USER_DESCRIPTION = #{userDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userNationDict != null" >
+        USER_NATION_DICT = #{userNationDict,jdbcType=INTEGER},
+      </if>
+      <if test="userGender != null" >
+        USER_GENDER = #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY = #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userNationality != null" >
+        USER_NATIONALITY = #{userNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="userReligionDict != null" >
+        USER_RELIGION_DICT = #{userReligionDict,jdbcType=INTEGER},
+      </if>
+      <if test="userTelephoneNumber != null" >
+        USER_TELEPHONE_NUMBER = #{userTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPreferredMobile != null" >
+        USER_PREFERRED_MOBILE = #{userPreferredMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalAddress != null" >
+        USER_POSTAL_ADDRESS = #{userPostalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostalCode != null" >
+        USER_POSTAL_CODE = #{userPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userFaxNumber != null" >
+        USER_FAX_NUMBER = #{userFaxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userStarttime != null" >
+        USER_STARTTIME = #{userStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEndtime != null" >
+        USER_ENDTIME = #{userEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userPwdModifiedDate != null" >
+        USER_PWD_MODIFIED_DATE = #{userPwdModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userIdCardNumber != null" >
+        USER_ID_CARD_NUMBER = #{userIdCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userUsertype != null" >
+        USER_USERTYPE = #{userUsertype,jdbcType=CHAR},
+      </if>
+      <if test="userEmployeeNumber != null" >
+        USER_EMPLOYEE_NUMBER = #{userEmployeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevelDict != null" >
+        USER_LEVEL_DICT = #{userLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="userCategory != null" >
+        USER_CATEGORY = #{userCategory,jdbcType=INTEGER},
+      </if>
+      <if test="userEntrytime != null" >
+        USER_ENTRYTIME = #{userEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userPositionLevelDict != null" >
+        USER_POSITION_LEVEL_DICT = #{userPositionLevelDict,jdbcType=INTEGER},
+      </if>
+      <if test="userLocation != null" >
+        USER_LOCATION = #{userLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="userRemark != null" >
+        USER_REMARK = #{userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEmployeetype != null" >
+      	USER_EMPLOYEETYPE = #{userEmployeetype,jdbcType=VARCHAR}, 
+      </if> 
+      <if test="userPhoto != null" >
+        USER_PHOTO = #{userPhoto,jdbcType=BLOB},
+      </if>
+	  <if test="lastLoginTime != null" >
+        LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+	  <if test="passwordMofidyFlag != null" >
+        PASSWORD_MODIFY_FLAG = #{passwordMofidyFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.harry.uac.persistence.AuthUser" >
+    update UAC.AUTH_USER
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_FIRSTNAME = #{userFirstname,jdbcType=VARCHAR},
+      USER_LASTNAME = #{userLastname,jdbcType=VARCHAR},
+      USER_UID = #{userUid,jdbcType=VARCHAR},
+      USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      USER_SALT = #{userSalt,jdbcType=VARCHAR},
+      USER_SURNAME = #{userSurname,jdbcType=VARCHAR},
+      USER_DESCRIPTION = #{userDescription,jdbcType=VARCHAR},
+      USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      USER_NATION_DICT = #{userNationDict,jdbcType=INTEGER},
+      USER_GENDER = #{userGender,jdbcType=INTEGER},
+      USER_BIRTHDAY = #{userBirthday,jdbcType=TIMESTAMP},
+      USER_NATIONALITY = #{userNationality,jdbcType=VARCHAR},
+      USER_RELIGION_DICT = #{userReligionDict,jdbcType=INTEGER},
+      USER_TELEPHONE_NUMBER = #{userTelephoneNumber,jdbcType=VARCHAR},
+      USER_PREFERRED_MOBILE = #{userPreferredMobile,jdbcType=VARCHAR},
+      USER_POSTAL_ADDRESS = #{userPostalAddress,jdbcType=VARCHAR},
+      USER_POSTAL_CODE = #{userPostalCode,jdbcType=VARCHAR},
+      USER_FAX_NUMBER = #{userFaxNumber,jdbcType=VARCHAR},
+      USER_STARTTIME = #{userStarttime,jdbcType=TIMESTAMP},
+      USER_ENDTIME = #{userEndtime,jdbcType=TIMESTAMP},
+      USER_STATUS = #{userStatus,jdbcType=INTEGER},
+      USER_PWD_MODIFIED_DATE = #{userPwdModifiedDate,jdbcType=TIMESTAMP},
+      USER_ID_CARD_NUMBER = #{userIdCardNumber,jdbcType=VARCHAR},
+      USER_USERTYPE = #{userUsertype,jdbcType=CHAR},
+      USER_EMPLOYEE_NUMBER = #{userEmployeeNumber,jdbcType=VARCHAR},
+      USER_LEVEL_DICT = #{userLevelDict,jdbcType=INTEGER},
+      USER_CATEGORY = #{userCategory,jdbcType=INTEGER},
+      USER_ENTRYTIME = #{userEntrytime,jdbcType=TIMESTAMP},
+      USER_POSITION_LEVEL_DICT = #{userPositionLevelDict,jdbcType=INTEGER},
+      USER_LOCATION = #{userLocation,jdbcType=VARCHAR},
+      USER_REMARK = #{userRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_EMPLOYEETYPE = #{userEmployeetype,jdbcType=VARCHAR},
+      USER_PHOTO = #{userPhoto,jdbcType=BLOB},
+	  LAST_LOGIN_TIME = #{lastLoginTime, jdbcType=TIMESTAMP},
+	  PASSWORD_MODIFY_FLAG = #{passwordModifyFlag, jdbcType=INTEGER}
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthUser" >
+    update UAC.AUTH_USER
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_FIRSTNAME = #{userFirstname,jdbcType=VARCHAR},
+      USER_LASTNAME = #{userLastname,jdbcType=VARCHAR},
+      USER_UID = #{userUid,jdbcType=VARCHAR},
+      USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      USER_SALT = #{userSalt,jdbcType=VARCHAR},
+      USER_SURNAME = #{userSurname,jdbcType=VARCHAR},
+      USER_DESCRIPTION = #{userDescription,jdbcType=VARCHAR},
+      USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      USER_NATION_DICT = #{userNationDict,jdbcType=INTEGER},
+      USER_GENDER = #{userGender,jdbcType=INTEGER},
+      USER_BIRTHDAY = #{userBirthday,jdbcType=TIMESTAMP},
+      USER_NATIONALITY = #{userNationality,jdbcType=VARCHAR},
+      USER_RELIGION_DICT = #{userReligionDict,jdbcType=INTEGER},
+      USER_TELEPHONE_NUMBER = #{userTelephoneNumber,jdbcType=VARCHAR},
+      USER_PREFERRED_MOBILE = #{userPreferredMobile,jdbcType=VARCHAR},
+      USER_POSTAL_ADDRESS = #{userPostalAddress,jdbcType=VARCHAR},
+      USER_POSTAL_CODE = #{userPostalCode,jdbcType=VARCHAR},
+      USER_FAX_NUMBER = #{userFaxNumber,jdbcType=VARCHAR},
+      USER_STARTTIME = #{userStarttime,jdbcType=TIMESTAMP},
+      USER_ENDTIME = #{userEndtime,jdbcType=TIMESTAMP},
+      USER_STATUS = #{userStatus,jdbcType=INTEGER},
+      USER_PWD_MODIFIED_DATE = #{userPwdModifiedDate,jdbcType=TIMESTAMP},
+      USER_ID_CARD_NUMBER = #{userIdCardNumber,jdbcType=VARCHAR},
+      USER_USERTYPE = #{userUsertype,jdbcType=CHAR},
+      USER_EMPLOYEE_NUMBER = #{userEmployeeNumber,jdbcType=VARCHAR},
+      USER_LEVEL_DICT = #{userLevelDict,jdbcType=INTEGER},
+      USER_CATEGORY = #{userCategory,jdbcType=INTEGER},
+      USER_ENTRYTIME = #{userEntrytime,jdbcType=TIMESTAMP},
+      USER_POSITION_LEVEL_DICT = #{userPositionLevelDict,jdbcType=INTEGER},
+      USER_LOCATION = #{userLocation,jdbcType=VARCHAR},
+      USER_REMARK = #{userRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_EMPLOYEETYPE = #{userEmployeetype,jdbcType=VARCHAR},
+	  LAST_LOGIN_TIME = #{lastLoginTime, jdbcType=TIMESTAMP},
+	  PASSWORD_MODIFY_FLAG = #{passwordModifyFlag, jdbcType=INTEGER}
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateOrgUser">
+    update UAC.AUTH_USER
+    set USER_ENDTIME = #{userEndtime},
+          USER_STATUS = 1
+    where USER_ID = #{userId}  
+  </update>
+  
+  <!--
+  <insert id="syncInsertToUser" parameterType="map" >
+	insert into UAC.AUTH_USER 
+	     (USER_ID, USER_NAME, USER_UID, 
+	      USER_PASSWORD, USER_SURNAME, USER_DESCRIPTION, 
+	      USER_EMAIL, USER_NATION_DICT, USER_GENDER, 
+	      USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+	      USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, 
+	      USER_POSTAL_ADDRESS, USER_POSTAL_CODE, USER_FAX_NUMBER, 
+	      USER_STARTTIME, USER_ENDTIME, USER_STATUS, 
+	      USER_PWD_MODIFIED_DATE, USER_ID_CARD_NUMBER, 
+	      USER_USERTYPE, USER_EMPLOYEE_NUMBER, USER_LEVEL_DICT, 
+	      USER_CATEGORY, USER_ENTRYTIME, USER_POSITION_LEVEL_DICT, 
+	      USER_LOCATION, USER_REMARK, CREATE_USER_ID, 
+	      CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME, USER_EMPLOYEETYPE,
+	      USER_PHOTO)    
+	select (next value for UAC.AUTH_USER_SEQUENCE ) AS USER_ID , USER_NAME, USER_EMPLOYEE_NUMBER AS USER_UID,
+	        USER_EMPLOYEE_NUMBER AS PASSWORD, USER_NAME AS USER_SURNAME, NULL AS USER_DESCRIPTION,
+	        USER_EMAIL, USER_NATION_DICT, USER_GENDER,
+	       USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+	       USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, 
+	     USER_POSTAL_ADDRESS, USER_POSTAL_CODE, NULL AS USER_FAX_NUMBER,
+	     USER_STARTTIME, USER_ENDTIME, NULL AS USER_STATUS, 
+	     NULL AS USER_PWD_MODIFIED_DATE, USER_ID_CARD_NUMBER, 
+	     0 AS USER_USERTYPE, USER_EMPLOYEE_NUMBER, NULL AS USER_LEVEL_DICT,
+	     NULL AS USER_CATEGORY, USER_ENTRYTIME, NULL AS USER_POSITION_LEVEL_DICT,
+	     USER_LOCATION, NULL AS USER_REMARK, 100 AS CREATE_USER_ID, 
+	     CURRENT DATE AS CREATE_TIME, 100 AS UPDATE_USER_ID, CURRENT DATE AS UPDATE_TIME, USER_EMPLOYEETYPE,
+	     NULL AS USER_PHOTO
+	      from UAC.TEMP_USER_INFO 
+	      where DATA_IS_SYNCED != 1
+	      AND DATA_SYNC_TYPE = 0
+	      AND ID IN 
+			<foreach item="id" collection="userList" 
+			    open="(" separator="," close=")"> 
+			      #{id} 
+			</foreach> 
+  </insert>
+  
+  <update id="syncUpdateToUser" parameterType="map">
+   	UPDATE UAC.AUTH_USER SET (USER_NAME, 
+	         USER_EMAIL, USER_NATION_DICT, USER_GENDER,
+	         USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+	         USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, 
+	         USER_POSTAL_ADDRESS, USER_POSTAL_CODE, 
+	         USER_STARTTIME, USER_ENDTIME,  USER_ID_CARD_NUMBER, 
+	         USER_EMPLOYEE_NUMBER,  USER_ENTRYTIME, 
+	         USER_LOCATION,   UPDATE_USER_ID, UPDATE_TIME, 
+	         USER_EMPLOYEETYPE) = 
+  	(
+      select USER_NAME, 
+	         USER_EMAIL, USER_NATION_DICT, USER_GENDER,
+	         USER_BIRTHDAY, USER_NATIONALITY, USER_RELIGION_DICT, 
+	         USER_TELEPHONE_NUMBER, USER_PREFERRED_MOBILE, 
+	         USER_POSTAL_ADDRESS, USER_POSTAL_CODE, 
+	         USER_STARTTIME, USER_ENDTIME,  USER_ID_CARD_NUMBER, 
+	         USER_EMPLOYEE_NUMBER,  USER_ENTRYTIME, 
+	         USER_LOCATION, 100 AS UPDATE_USER_ID, CURRENT DATE AS UPDATE_TIME, 
+	         USER_EMPLOYEETYPE
+	      from UAC.TEMP_USER_INFO 
+	      where DATA_IS_SYNCED != 1
+	      AND DATA_SYNC_TYPE = 1
+	      AND ID IN 
+			<foreach item="id" collection="userList" 
+			    open="(" separator="," close=")"> 
+			      #{id} 
+			</foreach> 
+    )
+    WHERE USER_EMPLOYEE_NUMBER IN ( select USER_EMPLOYEE_NUMBER
+	      from UAC.TEMP_USER_INFO 
+	      where DATA_IS_SYNCED != 1
+	      AND DATA_SYNC_TYPE = 1
+	      AND ID IN 
+			<foreach item="id" collection="userList" 
+			    open="(" separator="," close=")"> 
+			      #{id} 
+			</foreach>) 
+  </update>
+  
+  <update id="syncDeleteToUser" parameterType="map">
+   	UPDATE UAC.AUTH_USER SET USER_STATUS = 1
+    WHERE USER_EMPLOYEE_NUMBER IN ( select USER_EMPLOYEE_NUMBER
+	      from UAC.TEMP_USER_INFO 
+	      where DATA_IS_SYNCED != 1
+	      AND DATA_SYNC_TYPE = 2
+	      AND ID IN 
+			<foreach item="id" collection="userList" 
+			    open="(" separator="," close=")"> 
+			      #{id} 
+			</foreach>) 
+  </update>  
+  
+  <sql id="selectAllFields" >
+  	<if test="appFields!=NULL" >
+	  <foreach collection="appFields" item="field" separator=","  >
+	  ${field}
+	  </foreach>
+	</if>
+  </sql>
+
+  <select id="selectSyncAllData" resultType="map">
+  SELECT <include refid="selectAllFields" />
+  FROM UAC.AUTH_USER
+  </select>
+   -->
+  
+</mapper>

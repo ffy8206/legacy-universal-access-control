@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthRole" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_DISPLAY_ORDER" property="roleDisplayOrder" jdbcType="INTEGER" />
+    <result column="ROLE_DESCRIPTION" property="roleDescription" jdbcType="VARCHAR" />
+    <result column="ROLE_REMARK" property="roleRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ROLE_ID, APPLICATION_ID, ROLE_NAME, ROLE_DISPLAY_ORDER, ROLE_DESCRIPTION, ROLE_REMARK, 
+    CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthRoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectPaginationByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthRoleExample" >
+   select <include refid="Base_Column_List" /> from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    
+    from UAC.AUTH_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ROLE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ROLE
+    where ROLE_NAME = #{roleName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.AUTH_ROLE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </delete>
+   <delete id="deleteByPrimaryKeyWithValidator" parameterType="java.lang.Long" >
+    DELETE A FROM UAC.AUTH_ROLE A
+	WHERE A.ROLE_ID = #{roleId,jdbcType=BIGINT}
+	AND NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_ROLE_PRIVILEGE B WHERE B.ROLE_ID=A.ROLE_ID)
+	AND NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_GROUP_ROLE C WHERE C.ROLE_ID=A.ROLE_ID)
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthRoleExample" >
+    delete from UAC.AUTH_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthRole" >
+    <selectKey resultType="java.lang.Long" keyProperty="roleId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_ROLE (ROLE_ID, APPLICATION_ID, ROLE_NAME, 
+      ROLE_DISPLAY_ORDER, ROLE_DESCRIPTION, ROLE_REMARK, 
+      CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, 
+      UPDATE_TIME)
+    values (#{roleId,jdbcType=BIGINT}, #{applicationId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, 
+      #{roleDisplayOrder,jdbcType=INTEGER}, #{roleDescription,jdbcType=VARCHAR}, #{roleRemark,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthRole" >
+    <selectKey resultType="java.lang.Long" keyProperty="roleId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ROLE_ID,
+      <if test="applicationId != null" >
+        APPLICATION_ID,
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME,
+      </if>
+      <if test="roleDisplayOrder != null" >
+        ROLE_DISPLAY_ORDER,
+      </if>
+      <if test="roleDescription != null" >
+        ROLE_DESCRIPTION,
+      </if>
+      <if test="roleRemark != null" >
+        ROLE_REMARK,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{roleId,jdbcType=BIGINT},
+      <if test="applicationId != null" >
+        #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDisplayOrder != null" >
+        #{roleDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="roleDescription != null" >
+        #{roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="roleRemark != null" >
+        #{roleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthRoleExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_ROLE
+    <set >
+      <if test="record.roleId != null" >
+        ROLE_ID = #{record.roleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicationId != null" >
+        APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roleName != null" >
+        ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleDisplayOrder != null" >
+        ROLE_DISPLAY_ORDER = #{record.roleDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleDescription != null" >
+        ROLE_DESCRIPTION = #{record.roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleRemark != null" >
+        ROLE_REMARK = #{record.roleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_ROLE
+    set ROLE_ID = #{record.roleId,jdbcType=BIGINT},
+      APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+      ROLE_DISPLAY_ORDER = #{record.roleDisplayOrder,jdbcType=INTEGER},
+      ROLE_DESCRIPTION = #{record.roleDescription,jdbcType=VARCHAR},
+      ROLE_REMARK = #{record.roleRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthRole" >
+    update UAC.AUTH_ROLE
+    <set >
+      <if test="applicationId != null" >
+        APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDisplayOrder != null" >
+        ROLE_DISPLAY_ORDER = #{roleDisplayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="roleDescription != null" >
+        ROLE_DESCRIPTION = #{roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="roleRemark != null" >
+        ROLE_REMARK = #{roleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthRole" >
+    update UAC.AUTH_ROLE
+    set APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      ROLE_DISPLAY_ORDER = #{roleDisplayOrder,jdbcType=INTEGER},
+      ROLE_DESCRIPTION = #{roleDescription,jdbcType=VARCHAR},
+      ROLE_REMARK = #{roleRemark,jdbcType=VARCHAR},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </update>
+</mapper>

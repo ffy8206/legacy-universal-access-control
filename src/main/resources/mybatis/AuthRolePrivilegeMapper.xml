@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthRolePrivilegeMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthRolePrivilege" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <id column="PRIVILEGE_ID" property="privilegeId" jdbcType="BIGINT" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ROLE_ID, PRIVILEGE_ID, CREATE_USER_ID, CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthRolePrivilegeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ROLE_PRIVILEGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthRolePrivilegeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_ROLE_PRIVILEGE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+      and PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.harry.uac.persistence.AuthRolePrivilegeKey" >
+    delete from UAC.AUTH_ROLE_PRIVILEGE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+      and PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthRolePrivilegeExample" >
+    delete from UAC.AUTH_ROLE_PRIVILEGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthRolePrivilege" >
+    insert into UAC.AUTH_ROLE_PRIVILEGE (ROLE_ID, PRIVILEGE_ID, CREATE_USER_ID, 
+      CREATE_TIME)
+    values (#{roleId,jdbcType=BIGINT}, #{privilegeId,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthRolePrivilege" >
+    insert into UAC.AUTH_ROLE_PRIVILEGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="privilegeId != null" >
+        PRIVILEGE_ID,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="privilegeId != null" >
+        #{privilegeId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthRolePrivilegeExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_ROLE_PRIVILEGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_ROLE_PRIVILEGE
+    <set >
+      <if test="record.roleId != null" >
+        ROLE_ID = #{record.roleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.privilegeId != null" >
+        PRIVILEGE_ID = #{record.privilegeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_ROLE_PRIVILEGE
+    set ROLE_ID = #{record.roleId,jdbcType=BIGINT},
+      PRIVILEGE_ID = #{record.privilegeId,jdbcType=BIGINT},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthRolePrivilege" >
+    update UAC.AUTH_ROLE_PRIVILEGE
+    <set >
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+      and PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthRolePrivilege" >
+    update UAC.AUTH_ROLE_PRIVILEGE
+    set CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+      and PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </update>
+</mapper>

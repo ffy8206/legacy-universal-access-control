@@ -1,0 +1,32 @@
+@charset "utf-8";
+.leftPanel {
+	width: 260px;
+	height: 355px;
+	background-color: white;
+	float:left;
+	overflow: auto;
+	
+}
+
+.rightPanel {
+	margin-left: 6px;
+	float: left;
+	width: 520px;
+	height: 355px;	
+}
+
+.searchInput li{
+	float: left;
+	margin-left: 10px;
+}
+
+#confirmBtn {
+	position: absolute;
+	left: 470px;
+	top: 364px;
+}
+#cancelBtn {
+	position: absolute;
+	left: 540px;
+	top:364px;
+}

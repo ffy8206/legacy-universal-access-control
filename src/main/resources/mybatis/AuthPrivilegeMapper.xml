@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthPrivilegeMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthPrivilege" >
+    <id column="PRIVILEGE_ID" property="privilegeId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="PRIVILEGE_CODE" property="privilegeCode" jdbcType="VARCHAR" />
+    <result column="PRIVILEGE_NAME" property="privilegeName" jdbcType="VARCHAR" />
+    <result column="PRIVILEGE_DESCRIPTION" property="privilegeDescription" jdbcType="VARCHAR" />
+    <result column="PRIVILEGE_REMARK" property="privilegeRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PRIVILEGE_ID, APPLICATION_ID, PRIVILEGE_CODE, PRIVILEGE_NAME, PRIVILEGE_DESCRIPTION, 
+    PRIVILEGE_REMARK, CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthPrivilegeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_PRIVILEGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectPaginationByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthPrivilegeExample" >
+   select <include refid="Base_Column_List" /> from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    
+    from UAC.AUTH_PRIVILEGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_PRIVILEGE
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.AUTH_PRIVILEGE
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthPrivilegeExample" >
+    delete from UAC.AUTH_PRIVILEGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthPrivilege" >
+    <selectKey resultType="java.lang.Long" keyProperty="privilegeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_PRIVILEGE (PRIVILEGE_ID, APPLICATION_ID, PRIVILEGE_CODE, 
+      PRIVILEGE_NAME, PRIVILEGE_DESCRIPTION, PRIVILEGE_REMARK, 
+      CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, 
+      UPDATE_TIME)
+    values (#{privilegeId,jdbcType=BIGINT}, #{applicationId,jdbcType=BIGINT}, #{privilegeCode,jdbcType=VARCHAR}, 
+      #{privilegeName,jdbcType=VARCHAR}, #{privilegeDescription,jdbcType=VARCHAR}, #{privilegeRemark,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthPrivilege" >
+    <selectKey resultType="java.lang.Long" keyProperty="privilegeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_PRIVILEGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      PRIVILEGE_ID,
+      <if test="applicationId != null" >
+        APPLICATION_ID,
+      </if>
+      <if test="privilegeCode != null" >
+        PRIVILEGE_CODE,
+      </if>
+      <if test="privilegeName != null" >
+        PRIVILEGE_NAME,
+      </if>
+      <if test="privilegeDescription != null" >
+        PRIVILEGE_DESCRIPTION,
+      </if>
+      <if test="privilegeRemark != null" >
+        PRIVILEGE_REMARK,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{privilegeId,jdbcType=BIGINT},
+      <if test="applicationId != null" >
+        #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="privilegeCode != null" >
+        #{privilegeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeName != null" >
+        #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeDescription != null" >
+        #{privilegeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeRemark != null" >
+        #{privilegeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthPrivilegeExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_PRIVILEGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_PRIVILEGE
+    <set >
+      <if test="record.privilegeId != null" >
+        PRIVILEGE_ID = #{record.privilegeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicationId != null" >
+        APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.privilegeCode != null" >
+        PRIVILEGE_CODE = #{record.privilegeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeName != null" >
+        PRIVILEGE_NAME = #{record.privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeDescription != null" >
+        PRIVILEGE_DESCRIPTION = #{record.privilegeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeRemark != null" >
+        PRIVILEGE_REMARK = #{record.privilegeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_PRIVILEGE
+    set PRIVILEGE_ID = #{record.privilegeId,jdbcType=BIGINT},
+      APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      PRIVILEGE_CODE = #{record.privilegeCode,jdbcType=VARCHAR},
+      PRIVILEGE_NAME = #{record.privilegeName,jdbcType=VARCHAR},
+      PRIVILEGE_DESCRIPTION = #{record.privilegeDescription,jdbcType=VARCHAR},
+      PRIVILEGE_REMARK = #{record.privilegeRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthPrivilege" >
+    update UAC.AUTH_PRIVILEGE
+    <set >
+      <if test="applicationId != null" >
+        APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="privilegeCode != null" >
+        PRIVILEGE_CODE = #{privilegeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeName != null" >
+        PRIVILEGE_NAME = #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeDescription != null" >
+        PRIVILEGE_DESCRIPTION = #{privilegeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeRemark != null" >
+        PRIVILEGE_REMARK = #{privilegeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthPrivilege" >
+    update UAC.AUTH_PRIVILEGE
+    set APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      PRIVILEGE_CODE = #{privilegeCode,jdbcType=VARCHAR},
+      PRIVILEGE_NAME = #{privilegeName,jdbcType=VARCHAR},
+      PRIVILEGE_DESCRIPTION = #{privilegeDescription,jdbcType=VARCHAR},
+      PRIVILEGE_REMARK = #{privilegeRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=BIGINT}
+  </update>
+</mapper>

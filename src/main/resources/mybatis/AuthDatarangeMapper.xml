@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthDatarangeMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthDatarange" >
+    <id column="DATARANGE_ID" property="datarangeId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="DATARANGE_CODE" property="datarangeCode" jdbcType="VARCHAR" />
+    <result column="DATARANGE_NAME" property="datarangeName" jdbcType="VARCHAR" />
+    <result column="DATARANGE_VALUE" property="datarangeValue" jdbcType="VARCHAR" />
+    <result column="DATARANGE_DESCRIPTION" property="datarangeDescription" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DATARANGE_ID, APPLICATION_ID, DATARANGE_CODE, DATARANGE_NAME, DATARANGE_VALUE, DATARANGE_DESCRIPTION, 
+    CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthDatarangeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_DATARANGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectPaginationByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthDatarangeExample" >
+   select <include refid="Base_Column_List" /> from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    
+    from UAC.AUTH_DATARANGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_DATARANGE
+    where DATARANGE_ID = #{datarangeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.AUTH_DATARANGE
+    where DATARANGE_ID = #{datarangeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthDatarangeExample" >
+    delete from UAC.AUTH_DATARANGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthDatarange" >
+    <selectKey resultType="java.lang.Long" keyProperty="datarangeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_DATARANGE (DATARANGE_ID, APPLICATION_ID, DATARANGE_CODE, 
+      DATARANGE_NAME, DATARANGE_VALUE, DATARANGE_DESCRIPTION, 
+      CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, 
+      UPDATE_TIME)
+    values (#{datarangeId,jdbcType=BIGINT}, #{applicationId,jdbcType=BIGINT}, #{datarangeCode,jdbcType=VARCHAR}, 
+      #{datarangeName,jdbcType=VARCHAR}, #{datarangeValue,jdbcType=VARCHAR}, #{datarangeDescription,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthDatarange" >
+    <selectKey resultType="java.lang.Long" keyProperty="datarangeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.AUTH_DATARANGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      DATARANGE_ID,
+      <if test="applicationId != null" >
+        APPLICATION_ID,
+      </if>
+      <if test="datarangeCode != null" >
+        DATARANGE_CODE,
+      </if>
+      <if test="datarangeName != null" >
+        DATARANGE_NAME,
+      </if>
+      <if test="datarangeValue != null" >
+        DATARANGE_VALUE,
+      </if>
+      <if test="datarangeDescription != null" >
+        DATARANGE_DESCRIPTION,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{datarangeId,jdbcType=BIGINT},
+      <if test="applicationId != null" >
+        #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="datarangeCode != null" >
+        #{datarangeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="datarangeName != null" >
+        #{datarangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="datarangeValue != null" >
+        #{datarangeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="datarangeDescription != null" >
+        #{datarangeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthDatarangeExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_DATARANGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_DATARANGE
+    <set >
+      <if test="record.datarangeId != null" >
+        DATARANGE_ID = #{record.datarangeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicationId != null" >
+        APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.datarangeCode != null" >
+        DATARANGE_CODE = #{record.datarangeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datarangeName != null" >
+        DATARANGE_NAME = #{record.datarangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datarangeValue != null" >
+        DATARANGE_VALUE = #{record.datarangeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datarangeDescription != null" >
+        DATARANGE_DESCRIPTION = #{record.datarangeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_DATARANGE
+    set DATARANGE_ID = #{record.datarangeId,jdbcType=BIGINT},
+      APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      DATARANGE_CODE = #{record.datarangeCode,jdbcType=VARCHAR},
+      DATARANGE_NAME = #{record.datarangeName,jdbcType=VARCHAR},
+      DATARANGE_VALUE = #{record.datarangeValue,jdbcType=VARCHAR},
+      DATARANGE_DESCRIPTION = #{record.datarangeDescription,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthDatarange" >
+    update UAC.AUTH_DATARANGE
+    <set >
+      <if test="applicationId != null" >
+        APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="datarangeCode != null" >
+        DATARANGE_CODE = #{datarangeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="datarangeName != null" >
+        DATARANGE_NAME = #{datarangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="datarangeValue != null" >
+        DATARANGE_VALUE = #{datarangeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="datarangeDescription != null" >
+        DATARANGE_DESCRIPTION = #{datarangeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where DATARANGE_ID = #{datarangeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthDatarange" >
+    update UAC.AUTH_DATARANGE
+    set APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      DATARANGE_CODE = #{datarangeCode,jdbcType=VARCHAR},
+      DATARANGE_NAME = #{datarangeName,jdbcType=VARCHAR},
+      DATARANGE_VALUE = #{datarangeValue,jdbcType=VARCHAR},
+      DATARANGE_DESCRIPTION = #{datarangeDescription,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where DATARANGE_ID = #{datarangeId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthUserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthUserRole" >
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="DATARANGE_ID" property="datarangeId" jdbcType="BIGINT" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <association property="roleInfo" column="ROLE_ID" javaType="com.harry.uac.persistence.AuthRole">
+	    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+	    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+	    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+	    <result column="ROLE_DISPLAY_ORDER" property="roleDisplayOrder" jdbcType="INTEGER" />
+	    <result column="ROLE_DESCRIPTION" property="roleDescription" jdbcType="VARCHAR" />
+	    <result column="ROLE_REMARK" property="roleRemark" jdbcType="VARCHAR" />
+	    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_ID, ROLE_ID, DATARANGE_ID, CREATE_USER_ID, CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthUserRoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_USER_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthUserRoleExample" >
+    delete from UAC.AUTH_USER_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthUserRole" >
+    insert into UAC.AUTH_USER_ROLE (USER_ID, ROLE_ID, DATARANGE_ID, 
+      CREATE_USER_ID, CREATE_TIME)
+    values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{datarangeId,jdbcType=BIGINT}, 
+      #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthUserRole" >
+    insert into UAC.AUTH_USER_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="datarangeId != null" >
+        DATARANGE_ID,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="datarangeId != null" >
+        #{datarangeId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthUserRoleExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_USER_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_USER_ROLE
+    <set >
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roleId != null" >
+        ROLE_ID = #{record.roleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.datarangeId != null" >
+        DATARANGE_ID = #{record.datarangeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_USER_ROLE
+    set USER_ID = #{record.userId,jdbcType=BIGINT},
+      ROLE_ID = #{record.roleId,jdbcType=BIGINT},
+      DATARANGE_ID = #{record.datarangeId,jdbcType=BIGINT},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="Long" >
+    select 
+    	aur.USER_ID, aur.ROLE_ID, aur.DATARANGE_ID, aur.CREATE_USER_ID, aur.CREATE_TIME,		 
+	    ar.ROLE_ID, ar.APPLICATION_ID, ar.ROLE_NAME, ar.ROLE_DISPLAY_ORDER, ar.ROLE_DESCRIPTION, ar.ROLE_REMARK, 
+	    ar.CREATE_USER_ID, ar.CREATE_TIME, ar.UPDATE_USER_ID, ar.UPDATE_TIME
+    from UAC.AUTH_USER_ROLE aur
+    inner join UAC.AUTH_ROLE ar
+    on aur.ROLE_ID = ar.ROLE_ID
+    where aur.USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  
+   <select id="selectDataRangeByUserId" resultType="java.lang.Long" parameterType="Long" >
+    select DISTINCT 
+    	(aur.DATARANGE_ID)
+    from UAC.AUTH_USER_ROLE aur
+    inner join UAC.AUTH_ROLE ar
+    on aur.ROLE_ID = ar.ROLE_ID
+    where aur.USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

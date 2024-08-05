@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.ExtendDataTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.ExtendDataType" >
+    <id column="EXTEND_DATA_TYPE_ID" property="extendDataTypeId" jdbcType="BIGINT" />
+    <result column="EXTEND_DATA_TYPE_NAME" property="extendDataTypeName" jdbcType="VARCHAR" />
+    <result column="EXTEND_DATA_TYPE_SOURCE" property="extendDataTypeSource" jdbcType="VARCHAR" />
+    <result column="EXTEND_DATA_TYPE_CODE" property="extendDataTypeCode" jdbcType="VARCHAR" />
+    <result column="EXTEND_DATA_TYPE_STYLE" property="extendDataTypeStyle" jdbcType="INTEGER" />
+    <result column="EXTEND_DATA_TYPE_DESCRIPTION" property="extendDataTypeDescription" jdbcType="VARCHAR" />
+    <result column="EXTEND_DATA_REMARK" property="extendDataRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EXTEND_DATA_TYPE_ID, EXTEND_DATA_TYPE_NAME, EXTEND_DATA_TYPE_SOURCE, EXTEND_DATA_TYPE_CODE, 
+    EXTEND_DATA_TYPE_STYLE, EXTEND_DATA_TYPE_DESCRIPTION, EXTEND_DATA_REMARK, CREATE_USER_ID, 
+    CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.ExtendDataTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.EXTEND_DATA_TYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.EXTEND_DATA_TYPE
+    where EXTEND_DATA_TYPE_ID = #{extendDataTypeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.EXTEND_DATA_TYPE
+    where EXTEND_DATA_TYPE_ID = #{extendDataTypeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.ExtendDataTypeExample" >
+    delete from UAC.EXTEND_DATA_TYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.ExtendDataType" >
+	<selectKey resultType="java.lang.Long" keyProperty="extendDataTypeId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.EXTEND_DATA_TYPE (EXTEND_DATA_TYPE_ID, EXTEND_DATA_TYPE_NAME, 
+      EXTEND_DATA_TYPE_SOURCE, EXTEND_DATA_TYPE_CODE, 
+      EXTEND_DATA_TYPE_STYLE, EXTEND_DATA_TYPE_DESCRIPTION, 
+      EXTEND_DATA_REMARK, CREATE_USER_ID, CREATE_TIME, 
+      UPDATE_USER_ID, UPDATE_TIME)
+    values (#{extendDataTypeId,jdbcType=BIGINT}, #{extendDataTypeName,jdbcType=VARCHAR}, 
+      #{extendDataTypeSource,jdbcType=VARCHAR}, #{extendDataTypeCode,jdbcType=VARCHAR}, 
+      #{extendDataTypeStyle,jdbcType=INTEGER}, #{extendDataTypeDescription,jdbcType=VARCHAR}, 
+      #{extendDataRemark,jdbcType=VARCHAR}, #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.ExtendDataType" >
+  	<selectKey resultType="java.lang.Long" keyProperty="extendDataTypeId" order="AFTER" >
+     	SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.EXTEND_DATA_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="extendDataTypeId != null" >
+        EXTEND_DATA_TYPE_ID,
+      </if>
+      <if test="extendDataTypeName != null" >
+        EXTEND_DATA_TYPE_NAME,
+      </if>
+      <if test="extendDataTypeSource != null" >
+        EXTEND_DATA_TYPE_SOURCE,
+      </if>
+      <if test="extendDataTypeCode != null" >
+        EXTEND_DATA_TYPE_CODE,
+      </if>
+      <if test="extendDataTypeStyle != null" >
+        EXTEND_DATA_TYPE_STYLE,
+      </if>
+      <if test="extendDataTypeDescription != null" >
+        EXTEND_DATA_TYPE_DESCRIPTION,
+      </if>
+      <if test="extendDataRemark != null" >
+        EXTEND_DATA_REMARK,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="extendDataTypeId != null" >
+        #{extendDataTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="extendDataTypeName != null" >
+        #{extendDataTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataTypeSource != null" >
+        #{extendDataTypeSource,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataTypeCode != null" >
+        #{extendDataTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataTypeStyle != null" >
+        #{extendDataTypeStyle,jdbcType=INTEGER},
+      </if>
+      <if test="extendDataTypeDescription != null" >
+        #{extendDataTypeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataRemark != null" >
+        #{extendDataRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.ExtendDataTypeExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.EXTEND_DATA_TYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.EXTEND_DATA_TYPE
+    <set >
+      <if test="record.extendDataTypeId != null" >
+        EXTEND_DATA_TYPE_ID = #{record.extendDataTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.extendDataTypeName != null" >
+        EXTEND_DATA_TYPE_NAME = #{record.extendDataTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendDataTypeSource != null" >
+        EXTEND_DATA_TYPE_SOURCE = #{record.extendDataTypeSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendDataTypeCode != null" >
+        EXTEND_DATA_TYPE_CODE = #{record.extendDataTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendDataTypeStyle != null" >
+        EXTEND_DATA_TYPE_STYLE = #{record.extendDataTypeStyle,jdbcType=INTEGER},
+      </if>
+      <if test="record.extendDataTypeDescription != null" >
+        EXTEND_DATA_TYPE_DESCRIPTION = #{record.extendDataTypeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendDataRemark != null" >
+        EXTEND_DATA_REMARK = #{record.extendDataRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.EXTEND_DATA_TYPE
+    set EXTEND_DATA_TYPE_ID = #{record.extendDataTypeId,jdbcType=BIGINT},
+      EXTEND_DATA_TYPE_NAME = #{record.extendDataTypeName,jdbcType=VARCHAR},
+      EXTEND_DATA_TYPE_SOURCE = #{record.extendDataTypeSource,jdbcType=VARCHAR},
+      EXTEND_DATA_TYPE_CODE = #{record.extendDataTypeCode,jdbcType=VARCHAR},
+      EXTEND_DATA_TYPE_STYLE = #{record.extendDataTypeStyle,jdbcType=INTEGER},
+      EXTEND_DATA_TYPE_DESCRIPTION = #{record.extendDataTypeDescription,jdbcType=VARCHAR},
+      EXTEND_DATA_REMARK = #{record.extendDataRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.ExtendDataType" >
+    update UAC.EXTEND_DATA_TYPE
+    <set >
+      <if test="extendDataTypeName != null" >
+        EXTEND_DATA_TYPE_NAME = #{extendDataTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataTypeSource != null" >
+        EXTEND_DATA_TYPE_SOURCE = #{extendDataTypeSource,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataTypeCode != null" >
+        EXTEND_DATA_TYPE_CODE = #{extendDataTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataTypeStyle != null" >
+        EXTEND_DATA_TYPE_STYLE = #{extendDataTypeStyle,jdbcType=INTEGER},
+      </if>
+      <if test="extendDataTypeDescription != null" >
+        EXTEND_DATA_TYPE_DESCRIPTION = #{extendDataTypeDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="extendDataRemark != null" >
+        EXTEND_DATA_REMARK = #{extendDataRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where EXTEND_DATA_TYPE_ID = #{extendDataTypeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.ExtendDataType" >
+    update UAC.EXTEND_DATA_TYPE
+    set EXTEND_DATA_TYPE_NAME = #{extendDataTypeName,jdbcType=VARCHAR},
+      EXTEND_DATA_TYPE_SOURCE = #{extendDataTypeSource,jdbcType=VARCHAR},
+      EXTEND_DATA_TYPE_CODE = #{extendDataTypeCode,jdbcType=VARCHAR},
+      EXTEND_DATA_TYPE_STYLE = #{extendDataTypeStyle,jdbcType=INTEGER},
+      EXTEND_DATA_TYPE_DESCRIPTION = #{extendDataTypeDescription,jdbcType=VARCHAR},
+      EXTEND_DATA_REMARK = #{extendDataRemark,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where EXTEND_DATA_TYPE_ID = #{extendDataTypeId,jdbcType=BIGINT}
+  </update>
+</mapper>

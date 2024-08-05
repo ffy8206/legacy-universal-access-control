@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">    
+<mapper namespace="com.harry.uac.persistence.AbstractUser">
+  <resultMap id="userMap" type="abstractUser" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EMPLOYEE_NAME" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 获得全查询列表 -->
+  <select id="getAllUACUsers" resultMap="userMap">
+    select * from CMDI.EMP_ADDRESS_INFO
+  </select>
+  
+  <!-- 根据ID删除 -->
+   <delete id="deleteUsers" parameterType="String">
+     delete from CMDI.EMP_ADDRESS_INFO where ID = #id#
+   </delete>
+   
+    <!-- 新增用户对象 -->
+  <insert id="insertUsers" parameterType="abstractUser">
+      insert into CMDI.EMP_ADDRESS_INFO (ID,EMPLOYEE_NAME) values (#id#,#name#) where ID in (select ID from CMDI.EMP_PEOPLE_INFO) 
+   </insert>
+   
+   <update id="updateUsers" parameterType="abstractUser">
+      update CMDI.EMP_ADDRESS_INFO set EMPLOYEE_NAME=#name# where ID=#id#
+   </update>
+</mapper>

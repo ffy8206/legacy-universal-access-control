@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.SyncIncStatusMapper" >
+  <resultMap id="BaseResultMap.SyncIncStatus" type="com.harry.uac.persistence.SyncIncStatus" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="SYNC_STATUS" property="syncStatus" jdbcType="SMALLINT" />
+    <result column="SYNC_FAIL_DETAILS" property="syncFailDetails" jdbcType="VARCHAR" />
+    <result column="SYNC_SUCCESS_DETAILS" property="syncSuccessDetails" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	<association column="APPLICATION_ID" property="application" javaType="com.harry.uac.persistence.AuthApplication">
+		 <id column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+   		 <result column="APPLICATION_NAME" property="applicationName" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+    	 <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, APPLICATION_ID, SYNC_STATUS, SYNC_FAIL_DETAILS, SYNC_SUCCESS_DETAILS, CREATE_DATE
+  </sql>
+  <sql id="Joined_Column_List">
+  	SYNC.ID AS ID, SYNC.APPLICATION_ID AS APPLICATION_ID, SYNC.SYNC_STATUS AS SYNC_STATUS, 
+	SYNC.SYNC_FAIL_DETAILS AS SYNC_FAIL_DETAILS, SYNC.SYNC_SUCCESS_DETAILS AS SYNC_SUCCESS_DETAILS, 
+	SYNC.CREATE_DATE AS CREATE_DATE,	
+	APP.APPLICATION_NAME AS APPLICATION_NAME
+  </sql>
+  <sql id="Join_SQL">
+  	FROM UAC.SYNC_INC_STATUS SYNC INNER JOIN UAC.AUTH_APPLICATION APP
+	ON SYNC.APPLICATION_ID = APP.APPLICATION_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap.SyncIncStatus" parameterType="com.harry.uac.persistence.SyncIncStatusExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.SYNC_INC_STATUS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap.SyncIncStatus" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.SYNC_INC_STATUS
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.SYNC_INC_STATUS
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.SyncIncStatusExample" >
+    delete from UAC.SYNC_INC_STATUS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.SyncIncStatus" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.SYNC_INC_STATUS (ID, APPLICATION_ID, SYNC_STATUS, 
+      SYNC_FAIL_DETAILS, SYNC_SUCCESS_DETAILS, CREATE_DATE
+      )
+    values (#{id,jdbcType=BIGINT}, #{applicationId,jdbcType=BIGINT}, #{syncStatus,jdbcType=SMALLINT}, 
+      #{syncFailDetails,jdbcType=VARCHAR}, #{syncSuccessDetails,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.SyncIncStatus" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UAC.SYNC_INC_STATUS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="applicationId != null" >
+        APPLICATION_ID,
+      </if>
+      <if test="syncStatus != null" >
+        SYNC_STATUS,
+      </if>
+      <if test="syncFailDetails != null" >
+        SYNC_FAIL_DETAILS,
+      </if>
+      <if test="syncSuccessDetails != null" >
+        SYNC_SUCCESS_DETAILS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="applicationId != null" >
+        #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="syncStatus != null" >
+        #{syncStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="syncFailDetails != null" >
+        #{syncFailDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="syncSuccessDetails != null" >
+        #{syncSuccessDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.SyncIncStatusExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.SYNC_INC_STATUS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.SYNC_INC_STATUS
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicationId != null" >
+        APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.syncStatus != null" >
+        SYNC_STATUS = #{record.syncStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.syncFailDetails != null" >
+        SYNC_FAIL_DETAILS = #{record.syncFailDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syncSuccessDetails != null" >
+        SYNC_SUCCESS_DETAILS = #{record.syncSuccessDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.SYNC_INC_STATUS
+    set ID = #{record.id,jdbcType=BIGINT},
+      APPLICATION_ID = #{record.applicationId,jdbcType=BIGINT},
+      SYNC_STATUS = #{record.syncStatus,jdbcType=SMALLINT},
+      SYNC_FAIL_DETAILS = #{record.syncFailDetails,jdbcType=VARCHAR},
+      SYNC_SUCCESS_DETAILS = #{record.syncSuccessDetails,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.SyncIncStatus" >
+    update UAC.SYNC_INC_STATUS
+    <set >
+      <if test="applicationId != null" >
+        APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="syncStatus != null" >
+        SYNC_STATUS = #{syncStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="syncFailDetails != null" >
+        SYNC_FAIL_DETAILS = #{syncFailDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="syncSuccessDetails != null" >
+        SYNC_SUCCESS_DETAILS = #{syncSuccessDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.SyncIncStatus" >
+    update UAC.SYNC_INC_STATUS
+    set APPLICATION_ID = #{applicationId,jdbcType=BIGINT},
+      SYNC_STATUS = #{syncStatus,jdbcType=SMALLINT},
+      SYNC_FAIL_DETAILS = #{syncFailDetails,jdbcType=VARCHAR},
+      SYNC_SUCCESS_DETAILS = #{syncSuccessDetails,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectPaginationOnePageSyncStatus" resultMap="BaseResultMap.SyncIncStatus" parameterType="com.harry.uac.persistence.SyncIncStatusExample" >
+  select * from (
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Joined_Column_List" />
+    
+    <include refid="Join_SQL" />
+	 <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ) AS TEMP LIMIT ${page.begin - 1}, ${page.length}
+  </select>  
+</mapper>

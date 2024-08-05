@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="uac" namespace="/"
+		extends="rest-default, struts-default, json-default">
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
+		<!-- check user login or not -->
+		<interceptors>
+			<interceptor name="loginInterceptor"
+				class="com.harry.uac.common.interceptor.LoginInterceptor" />
+			<interceptor name="authorityInterceptor"
+				class="com.harry.uac.common.interceptor.AuthorityInterceptor" />
+			<interceptor-stack name="authorityDefaultStack">
+				<interceptor-ref name="store">
+					<param name="operationMode">AUTOMATIC</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="authorityDefaultStack"></default-interceptor-ref>
+		<!--<default-action-ref name="defaultAction"></default-action-ref> -->
+		<global-results>
+			<result name="ajaxDone">/WEB-INF/content/global/ajaxDone.jsp</result>  
+			<result name="login">/WEB-INF/content/global/ajaxTimeout.jsp</result>
+			<result name="login_index">/WEB-INF/content/login.jsp</result>
+			<result name="norights">/WEB-INF/content/global/welcome.jsp</result>
+			<result name="invalid.token">/WEB-INF/content/global/invalid_token.jsp</result>
+			<result name="exceptionHandler">/WEB-INF/content/global/error.jsp</result>
+		    <result name="input" type="json">
+		       <param name="root">fieldErrors.values</param>
+		       <param name="statusCode">300</param>
+		    </result>
+		</global-results>
+		<global-exception-mappings>
+            <exception-mapping result="exceptionHandler" exception="java.lang.Exception"/>
+        </global-exception-mappings>
+		<!-- <action name="defaultAction"> <result>/WEB-INF/content/login.jsp</result> 
+			</action> -->
+	</package>
+</struts>

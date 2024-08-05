@@ -1,0 +1,68 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN" "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+
+    <field name="org.orgCode">
+        <field-validator type="requiredstring">
+        	<param name="trim">true</param>
+            <message key="error.org.code.required"/>
+        </field-validator>
+    </field>
+
+    <field name="org.orgName">
+        <field-validator type="requiredstring">
+        	<param name="trim">true</param>
+            <message key="error.org.displayName.required"/>
+        </field-validator>
+    </field>
+
+    <field name="org.orgInitials">
+        <field-validator type="requiredstring">
+        	<param name="trim">true</param>
+            <message key="error.org.initials.required"/>
+        </field-validator>
+    </field>
+
+	<!--
+    <field name="org.orgParentId">
+        <field-validator type="required">
+        	<param name="trim">true</param>
+            <message key="error.org.parentId.required"/>
+        </field-validator>
+    </field>
+    -->
+    
+    <field name="org.orgManagerUid">
+        <field-validator type="requiredstring">
+        	<param name="trim">true</param>
+            <message key="error.org.managerUid.required"/>
+        </field-validator>
+    </field>
+    
+    <!-- 
+    <field name="org.orgErpId">
+        <field-validator type="requiredstring">
+        	<param name="trim">true</param>
+            <message key="error.org.erpId.required"/>
+        </field-validator>
+    </field>
+    -->
+    
+    <field name="org.orgLocation">
+        <field-validator type="requiredstring">
+        	<param name="trim">true</param>
+            <message key="error.org.location.required"/>
+        </field-validator>
+    </field>
+    
+    <field name="org.orgStarttime">
+        <field-validator type="date">
+            <message key="error.org.date"/>
+        </field-validator>
+    </field>
+    
+    <field name="org.orgEndtime">
+        <field-validator type="date">
+            <message key="error.org.date"/>
+        </field-validator>
+    </field>
+</validators>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<description>Spring datasource config</description>
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:application.properties</value>
+		</property>
+	</bean>
+	<!-- c3p0 connection pool -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<!-- Connection Info -->
+		<property name="driverClass" value="${dataSource.driverClassName}"/>
+		<property name="jdbcUrl" value="${dataSource.url}"/>
+		<property name="user" value="${dataSource.username}"/>
+		<property name="password" value="${dataSource.password}"/>
+		<property name="maxPoolSize" value="${dataSource.c3p0.max_size}"/>
+		<property name="minPoolSize" value="${dataSource.c3p0.min_size}"/>
+		<property name="maxIdleTime" value="${dataSource.c3p0.max_idle_time}"/>
+		<property name="maxStatements" value="${dataSource.c3p0.max_statements}"/>
+		<property name="idleConnectionTestPeriod" value="${dataSource.c3p0.idle_test_period}"/>
+		<property name="acquireIncrement" value="${dataSource.c3p0.acquire_increment}"/>
+	</bean>
+	
+	<!-- Transaction -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- use aop Transaction -->
+	<!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" no-rollback-for="java.lang.RuntimeException"/>
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.RuntimeException" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.RuntimeException" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" />
+			<tx:method name="add*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.RuntimeException" />
+			<tx:method name="sync*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.RuntimeException" />
+
+			<tx:method name="find*" propagation="SUPPORTS"/>
+			<tx:method name="get*" propagation="SUPPORTS"/>
+			<tx:method name="select*" propagation="SUPPORTS"/>
+			<tx:method name="onePage*" propagation="SUPPORTS"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="pc" expression="execution(* com.harry.uac.service.impl.*.* (..))" />
+		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
+	</aop:config>
+	
+</beans>

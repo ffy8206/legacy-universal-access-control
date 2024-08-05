@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="baseLayout" template="/WEB-INF/content/main/baseLayout.jsp">
+        <put-attribute name="title" value="User Authorization Center"/>
+        <put-attribute name="header" value="/WEB-INF/content/main/header.jsp"/>
+        <put-attribute name="tree"   value="/WEB-INF/content/main/tree.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/content/main/body.jsp"/>
+        <put-attribute name="footer"   value="/WEB-INF/content/main/footer.jsp"/>
+    </definition>
+    <definition name="workSpaceLayout" template="/WEB-INF/content/workspace/workSpaceLayout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="body"   value="/WEB-INF/content/workspace/body.jsp"/>
+    </definition>
+    <definition name="userTemplate" extends="workSpaceLayout">
+		<put-attribute name="title"  value=""/>
+        <put-attribute name="body"   value="/WEB-INF/content/user/user.jsp"/>
+	</definition>
+	<definition name="orgTemplate" extends="workSpaceLayout">
+		<put-attribute name="title"  value=""/>
+        <put-attribute name="body"   value="/WEB-INF/content/org/orgnization.jsp"/>
+	</definition>
+	<definition name="userGroupTemplate" extends="workSpaceLayout">
+		<put-attribute name="title"  value=""/>
+        <put-attribute name="body"   value="/WEB-INF/content/usergroup/listUserGroup.jsp"/>
+	</definition>
+</tiles-definitions>

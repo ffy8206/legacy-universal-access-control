@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthUserGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.AuthUserGroup" >
+    <id column="GROUP_ID" property="groupId" jdbcType="BIGINT" />
+    <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	<association property="groupInfo" column="GROUP_ID" javaType="com.harry.uac.persistence.AuthGroup">
+	    <id column="GROUP_ID" property="groupId" jdbcType="BIGINT" />
+	    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+	    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+	    <result column="GROUP_TYPE" property="groupType" jdbcType="INTEGER" />
+	    <result column="GROUP_DESCRIPTION" property="groupDescription" jdbcType="VARCHAR" />
+	    <result column="GROUP_RULE" property="groupRule" jdbcType="VARCHAR" />
+	    <result column="GROUP_REMARK" property="groupRemark" jdbcType="VARCHAR" />
+	    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</association> 
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    GROUP_ID, USER_ID, CREATE_USER_ID, CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthUserGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_USER_GROUP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.AuthUserGroupKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.AUTH_USER_GROUP
+    where GROUP_ID = #{groupId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.harry.uac.persistence.AuthUserGroupKey" >
+    delete from UAC.AUTH_USER_GROUP
+    where GROUP_ID = #{groupId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.AuthUserGroupExample" >
+    delete from UAC.AUTH_USER_GROUP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.AuthUserGroup" >
+    insert into UAC.AUTH_USER_GROUP (GROUP_ID, USER_ID, CREATE_USER_ID, 
+      CREATE_TIME)
+    values (#{groupId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.AuthUserGroup" >
+    insert into UAC.AUTH_USER_GROUP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        GROUP_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.AuthUserGroupExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.AUTH_USER_GROUP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.AUTH_USER_GROUP
+    <set >
+      <if test="record.groupId != null" >
+        GROUP_ID = #{record.groupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.AUTH_USER_GROUP
+    set GROUP_ID = #{record.groupId,jdbcType=BIGINT},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.AuthUserGroup" >
+    update UAC.AUTH_USER_GROUP
+    <set >
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where GROUP_ID = #{groupId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.AuthUserGroup" >
+    update UAC.AUTH_USER_GROUP
+    set CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where GROUP_ID = #{groupId,jdbcType=BIGINT}
+      and USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="Long" >
+    select 
+		aug.GROUP_ID, aug.USER_ID, aug.CREATE_USER_ID, aug.CREATE_TIME , 
+		ag.APPLICATION_ID, ag.GROUP_NAME, ag.GROUP_TYPE, ag.GROUP_DESCRIPTION, ag.GROUP_RULE, ag.GROUP_REMARK, 
+		ag.CREATE_USER_ID, ag.CREATE_TIME, ag.UPDATE_USER_ID, ag.UPDATE_TIME 
+    from UAC.AUTH_USER_GROUP aug
+    inner join UAC.AUTH_GROUP ag
+    on aug.GROUP_ID = ag.GROUP_ID
+    where aug.USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

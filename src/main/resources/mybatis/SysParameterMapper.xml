@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.SysParameterMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.SysParameter" >
+    <result column="PARAMETER_NAME" property="parameterName" jdbcType="VARCHAR" />
+    <result column="PARAMETER_VALUE" property="parameterValue" jdbcType="VARCHAR" />
+    <result column="PARAMETER_ORDER" property="parameterOrder" jdbcType="INTEGER" />
+    <result column="PARAMETER_DESCRIPTION" property="parameterDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PARAMETER_NAME, PARAMETER_VALUE, PARAMETER_ORDER, PARAMETER_DESCRIPTION
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.SysParameterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.SYS_PARAMETER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.SysParameterExample" >
+    delete from UAC.SYS_PARAMETER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.SysParameter" >
+    insert into UAC.SYS_PARAMETER (PARAMETER_NAME, PARAMETER_VALUE, PARAMETER_ORDER, 
+      PARAMETER_DESCRIPTION)
+    values (#{parameterName,jdbcType=VARCHAR}, #{parameterValue,jdbcType=VARCHAR}, #{parameterOrder,jdbcType=INTEGER}, 
+      #{parameterDescription,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.SysParameter" >
+    insert into UAC.SYS_PARAMETER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parameterName != null" >
+        PARAMETER_NAME,
+      </if>
+      <if test="parameterValue != null" >
+        PARAMETER_VALUE,
+      </if>
+      <if test="parameterOrder != null" >
+        PARAMETER_ORDER,
+      </if>
+      <if test="parameterDescription != null" >
+        PARAMETER_DESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parameterName != null" >
+        #{parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterValue != null" >
+        #{parameterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterOrder != null" >
+        #{parameterOrder,jdbcType=INTEGER},
+      </if>
+      <if test="parameterDescription != null" >
+        #{parameterDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.SysParameterExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.SYS_PARAMETER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.SYS_PARAMETER
+    <set >
+      <if test="record.parameterName != null" >
+        PARAMETER_NAME = #{record.parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameterValue != null" >
+        PARAMETER_VALUE = #{record.parameterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameterOrder != null" >
+        PARAMETER_ORDER = #{record.parameterOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.parameterDescription != null" >
+        PARAMETER_DESCRIPTION = #{record.parameterDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.SYS_PARAMETER
+    set PARAMETER_NAME = #{record.parameterName,jdbcType=VARCHAR},
+      PARAMETER_VALUE = #{record.parameterValue,jdbcType=VARCHAR},
+      PARAMETER_ORDER = #{record.parameterOrder,jdbcType=INTEGER},
+      PARAMETER_DESCRIPTION = #{record.parameterDescription,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.SysParameterExample" >
+    select
+    <include refid="Base_Column_List" />
+    from UAC.SYS_PARAMETER
+  </select>
+</mapper>

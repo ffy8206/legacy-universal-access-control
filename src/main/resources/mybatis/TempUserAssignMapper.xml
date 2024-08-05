@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.TempUserAssignMapper" >
+  <resultMap id="BaseResultMap" type="com.harry.uac.persistence.TempUserAssign" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="EMPLOYEE_NUMBER" property="employeeNumber" jdbcType="VARCHAR" />
+    <result column="JOB_CODE" property="jobCode" jdbcType="VARCHAR" />
+    <result column="JOB_NAME" property="jobName" jdbcType="VARCHAR" />
+    <result column="POSITION_CODE" property="positionCode" jdbcType="VARCHAR" />
+    <result column="POSITION_NAME" property="positionName" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="DATE" />
+    <result column="ASS_ID" property="assId" jdbcType="BIGINT" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="DATA_SYNC_TYPE" property="dataSyncType" jdbcType="SMALLINT" />
+    <result column="DATA_SOURCE" property="dataSource" jdbcType="SMALLINT" />
+    <result column="DATA_FILE" property="dataFile" jdbcType="VARCHAR" />
+    <result column="DATA_IS_SYNCED" property="dataIsSynced" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ORG_CODE, EMPLOYEE_NUMBER, JOB_CODE, JOB_NAME, POSITION_CODE, POSITION_NAME, 
+    START_DATE, ASS_ID, CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, UPDATE_TIME, DATA_SYNC_TYPE, 
+    DATA_SOURCE, DATA_FILE, DATA_IS_SYNCED
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.harry.uac.persistence.TempUserAssignExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UAC.TEMP_USER_ASSIGN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UAC.TEMP_USER_ASSIGN
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UAC.TEMP_USER_ASSIGN
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.harry.uac.persistence.TempUserAssignExample" >
+    delete from UAC.TEMP_USER_ASSIGN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.harry.uac.persistence.TempUserAssign" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey> 
+    insert into UAC.TEMP_USER_ASSIGN (ID, ORG_CODE, EMPLOYEE_NUMBER, 
+      JOB_CODE, JOB_NAME, POSITION_CODE, 
+      POSITION_NAME, START_DATE, ASS_ID, 
+      CREATE_USER_ID, CREATE_TIME, UPDATE_USER_ID, 
+      UPDATE_TIME, DATA_SYNC_TYPE, DATA_SOURCE, 
+      DATA_FILE, DATA_IS_SYNCED)
+    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{employeeNumber,jdbcType=VARCHAR}, 
+      #{jobCode,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{positionCode,jdbcType=VARCHAR}, 
+      #{positionName,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{assId,jdbcType=BIGINT}, 
+      #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{dataSyncType,jdbcType=SMALLINT}, #{dataSource,jdbcType=SMALLINT}, 
+      #{dataFile,jdbcType=VARCHAR}, #{dataIsSynced,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.harry.uac.persistence.TempUserAssign" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey> 
+    insert into UAC.TEMP_USER_ASSIGN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="employeeNumber != null" >
+        EMPLOYEE_NUMBER,
+      </if>
+      <if test="jobCode != null" >
+        JOB_CODE,
+      </if>
+      <if test="jobName != null" >
+        JOB_NAME,
+      </if>
+      <if test="positionCode != null" >
+        POSITION_CODE,
+      </if>
+      <if test="positionName != null" >
+        POSITION_NAME,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="assId != null" >
+        ASS_ID,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="dataSyncType != null" >
+        DATA_SYNC_TYPE,
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE,
+      </if>
+      <if test="dataFile != null" >
+        DATA_FILE,
+      </if>
+      <if test="dataIsSynced != null" >
+        DATA_IS_SYNCED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNumber != null" >
+        #{employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCode != null" >
+        #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="positionCode != null" >
+        #{positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="positionName != null" >
+        #{positionName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="assId != null" >
+        #{assId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataSyncType != null" >
+        #{dataSyncType,jdbcType=SMALLINT},
+      </if>
+      <if test="dataSource != null" >
+        #{dataSource,jdbcType=SMALLINT},
+      </if>
+      <if test="dataFile != null" >
+        #{dataFile,jdbcType=VARCHAR},
+      </if>
+      <if test="dataIsSynced != null" >
+        #{dataIsSynced,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.harry.uac.persistence.TempUserAssignExample" resultType="java.lang.Integer" >
+    select count(*) from UAC.TEMP_USER_ASSIGN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UAC.TEMP_USER_ASSIGN
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgCode != null" >
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeNumber != null" >
+        EMPLOYEE_NUMBER = #{record.employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobCode != null" >
+        JOB_CODE = #{record.jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobName != null" >
+        JOB_NAME = #{record.jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionCode != null" >
+        POSITION_CODE = #{record.positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionName != null" >
+        POSITION_NAME = #{record.positionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null" >
+        START_DATE = #{record.startDate,jdbcType=DATE},
+      </if>
+      <if test="record.assId != null" >
+        ASS_ID = #{record.assId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dataSyncType != null" >
+        DATA_SYNC_TYPE = #{record.dataSyncType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.dataSource != null" >
+        DATA_SOURCE = #{record.dataSource,jdbcType=SMALLINT},
+      </if>
+      <if test="record.dataFile != null" >
+        DATA_FILE = #{record.dataFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataIsSynced != null" >
+        DATA_IS_SYNCED = #{record.dataIsSynced,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UAC.TEMP_USER_ASSIGN
+    set ID = #{record.id,jdbcType=BIGINT},
+      ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      EMPLOYEE_NUMBER = #{record.employeeNumber,jdbcType=VARCHAR},
+      JOB_CODE = #{record.jobCode,jdbcType=VARCHAR},
+      JOB_NAME = #{record.jobName,jdbcType=VARCHAR},
+      POSITION_CODE = #{record.positionCode,jdbcType=VARCHAR},
+      POSITION_NAME = #{record.positionName,jdbcType=VARCHAR},
+      START_DATE = #{record.startDate,jdbcType=DATE},
+      ASS_ID = #{record.assId,jdbcType=BIGINT},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{record.updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      DATA_SYNC_TYPE = #{record.dataSyncType,jdbcType=SMALLINT},
+      DATA_SOURCE = #{record.dataSource,jdbcType=SMALLINT},
+      DATA_FILE = #{record.dataFile,jdbcType=VARCHAR},
+      DATA_IS_SYNCED = #{record.dataIsSynced,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.harry.uac.persistence.TempUserAssign" >
+    update UAC.TEMP_USER_ASSIGN
+    <set >
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNumber != null" >
+        EMPLOYEE_NUMBER = #{employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCode != null" >
+        JOB_CODE = #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null" >
+        JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="positionCode != null" >
+        POSITION_CODE = #{positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="positionName != null" >
+        POSITION_NAME = #{positionName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="assId != null" >
+        ASS_ID = #{assId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataSyncType != null" >
+        DATA_SYNC_TYPE = #{dataSyncType,jdbcType=SMALLINT},
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE = #{dataSource,jdbcType=SMALLINT},
+      </if>
+      <if test="dataFile != null" >
+        DATA_FILE = #{dataFile,jdbcType=VARCHAR},
+      </if>
+      <if test="dataIsSynced != null" >
+        DATA_IS_SYNCED = #{dataIsSynced,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.harry.uac.persistence.TempUserAssign" >
+    update UAC.TEMP_USER_ASSIGN
+    set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      EMPLOYEE_NUMBER = #{employeeNumber,jdbcType=VARCHAR},
+      JOB_CODE = #{jobCode,jdbcType=VARCHAR},
+      JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      POSITION_CODE = #{positionCode,jdbcType=VARCHAR},
+      POSITION_NAME = #{positionName,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=DATE},
+      ASS_ID = #{assId,jdbcType=BIGINT},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DATA_SYNC_TYPE = #{dataSyncType,jdbcType=SMALLINT},
+      DATA_SOURCE = #{dataSource,jdbcType=SMALLINT},
+      DATA_FILE = #{dataFile,jdbcType=VARCHAR},
+      DATA_IS_SYNCED = #{dataIsSynced,jdbcType=SMALLINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <select id="selectXMLSyncData" resultMap="BaseResultMap">
+  SELECT eai.ASS_ID AS ASS_ID, eai.START_DATE AS START_DATE,
+         eai.ORG_CODE AS ORG_CODE, eai.EMPLOYEE_NUMBER AS EMPLOYEE_NUMBER, 
+         eai.JOB_CODE AS JOB_CODE, eai.POSITION_CODE AS POSITION_CODE, 
+         eai.JOB_NAME AS JOB_NAME, eai.POSITION_NAME  AS POSITION_NAME,
+         eai.SYNC_STATUS AS DATA_SYNC_TYPE, epi.SYNC_STATUS AS USER_SYNC_STATUS
+  FROM UAC.EMP_ASSIGN_INFO eai inner join UAC.EMP_PEOPLE_INFO epi
+  ON eai.EMPLOYEE_NUMBER = epi.EMPLOYEE_NUMBER
+  WHERE eai.END_DATE = '4712-12-31' AND eai.SYNC_STATUS is not NULL
+  </select> 
+</mapper>

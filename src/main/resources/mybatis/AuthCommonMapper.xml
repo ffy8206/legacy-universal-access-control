@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.harry.uac.dao.AuthCommonMapper" >
+   <resultMap id="RolePrivilegeMap" type="com.harry.uac.persistence.AuthPrivilege" >
+   		<id column="PRIVILEGE_ID" property="privilegeId" jdbcType="BIGINT" />
+	    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+	    <result column="PRIVILEGE_CODE" property="privilegeCode" jdbcType="VARCHAR" />
+	    <result column="PRIVILEGE_NAME" property="privilegeName" jdbcType="VARCHAR" />
+	    <result column="PRIVILEGE_DESCRIPTION" property="privilegeDescription" jdbcType="VARCHAR" />
+    	<result column="PRIVILEGE_REMARK" property="privilegeRemark" jdbcType="VARCHAR" />
+   </resultMap>
+   <resultMap id="GroupResultMap" type="com.harry.uac.persistence.AuthGroup" >
+    <id column="GROUP_ID" property="groupId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="GROUP_TYPE" property="groupType" jdbcType="INTEGER" />
+    <result column="GROUP_DESCRIPTION" property="groupDescription" jdbcType="VARCHAR" />
+    <result column="GROUP_RULE" property="groupRule" jdbcType="VARCHAR" />
+    <result column="GROUP_REMARK" property="groupRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="RoleResultMap" type="com.harry.uac.persistence.AuthRole" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_DISPLAY_ORDER" property="roleDisplayOrder" jdbcType="INTEGER" />
+    <result column="ROLE_DESCRIPTION" property="roleDescription" jdbcType="VARCHAR" />
+    <result column="ROLE_REMARK" property="roleRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="OrgResultMap" type="com.harry.uac.persistence.AuthOrg" >
+    <id column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_INITIALS" property="orgInitials" jdbcType="VARCHAR" />
+    <result column="ORG_DESCRIPTION" property="orgDescription" jdbcType="VARCHAR" />
+    <result column="ORG_STYLE" property="orgStyle" jdbcType="INTEGER" />
+    <result column="ORG_STATUS" property="orgStatus" jdbcType="INTEGER" />
+    <result column="ORG_PARENT_ID" property="orgParentId" jdbcType="VARCHAR" />
+    <result column="ORG_LAYER_CODE" property="orgLayerCode" jdbcType="VARCHAR" />
+    <result column="ORG_LEVEL_DICT" property="orgLevelDict" jdbcType="INTEGER" />
+    <result column="ORG_DISPLAY_ORDER" property="orgDisplayOrder" jdbcType="INTEGER" />
+    <result column="ORG_SUPERVISOR_UID" property="orgSupervisorUid" jdbcType="VARCHAR" />
+    <result column="ORG_MANAGER_UID" property="orgManagerUid" jdbcType="VARCHAR" />
+    <result column="ORG_VICE_MANAGER_UID" property="orgViceManagerUid" jdbcType="VARCHAR" />
+    <result column="ORG_ADMIN_UID" property="orgAdminUid" jdbcType="VARCHAR" />
+    <result column="ORG_MANAGE_ORG_ID" property="orgManageOrgId" jdbcType="VARCHAR" />
+    <result column="ORG_POSTAL_ADDRESS" property="orgPostalAddress" jdbcType="VARCHAR" />
+    <result column="ORG_POSTAL_CODE" property="orgPostalCode" jdbcType="VARCHAR" />
+    <result column="ORG_TELEPHONE_NUMBER" property="orgTelephoneNumber" jdbcType="VARCHAR" />
+    <result column="ORG_FAX_NUMBER" property="orgFaxNumber" jdbcType="VARCHAR" />
+    <result column="ORG_STARTTIME" property="orgStarttime" jdbcType="TIMESTAMP" />
+    <result column="ORG_ENDTIME" property="orgEndtime" jdbcType="TIMESTAMP" />
+    <result column="ORG_ERP_ID" property="orgErpId" jdbcType="VARCHAR" />
+    <result column="ORG_LOCATION" property="orgLocation" jdbcType="VARCHAR" />
+    <result column="ORG_REMARK" property="orgRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="DatarangePrivilegeMap" type="com.harry.uac.persistence.AuthDatarange" >
+   		<id column="DATARANGE_ID" property="datarangeId" jdbcType="BIGINT" />
+	    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+	    <result column="DATARANGE_CODE" property="datarangeCode" jdbcType="VARCHAR" />
+	    <result column="DATARANGE_NAME" property="datarangeName" jdbcType="VARCHAR" />
+	    <result column="DATARANGE_VALUE" property="datarangeValue" jdbcType="VARCHAR" />
+	    <result column="DATARANGE_DESCRIPTION" property="datarangeDescription" jdbcType="VARCHAR" />
+   </resultMap>
+  <resultMap id="UserPrivilegeMap" type="com.harry.uac.persistence.UserPrivilege" >
+    <id column="PRIVILEGE_ID" property="privilegeId" jdbcType="BIGINT" />
+	<result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+	<result column="PRIVILEGE_CODE" property="privilegeCode" jdbcType="VARCHAR" />
+	<result column="PRIVILEGE_NAME" property="privilegeName" jdbcType="VARCHAR" />
+	<result column="PRIVILEGE_DESCRIPTION" property="privilegeDescription" jdbcType="VARCHAR" />
+    <result column="PRIVILEGE_REMARK" property="privilegeRemark" jdbcType="VARCHAR" />
+    <association property="application" column="APPLICATION_ID" javaType="com.harry.uac.persistence.AuthApplication">
+	    <id column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+	    <result column="APPLICATION_NAME" property="applicationName" jdbcType="VARCHAR" />
+	    <result column="APPLICATION_URL" property="applicationUrl" jdbcType="VARCHAR" />
+	    <result column="APPLICATION_CONTACT" property="applicationContact" jdbcType="VARCHAR" />
+	    <result column="APPLICATION_CONTACT_PHONE" property="applicationContactPhone" jdbcType="VARCHAR" />
+	    <result column="APPLICATION_SYNC_FIELDS" property="applicationSyncFields" jdbcType="BIGINT" />
+	    <result column="APPLICATION_REMARK" property="applicationRemark" jdbcType="VARCHAR" />
+	</association> 
+  </resultMap>
+  <resultMap id="GroupRoleResultMap" type="com.harry.uac.persistence.GroupRoleMisc" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <id column="GROUP_ID" property="groupId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="GROUP_TYPE" property="groupType" jdbcType="INTEGER" />
+    <result column="GROUP_DESCRIPTION" property="groupDescription" jdbcType="VARCHAR" />
+    <result column="GROUP_RULE" property="groupRule" jdbcType="VARCHAR" />
+    <result column="GROUP_REMARK" property="groupRemark" jdbcType="VARCHAR" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_DISPLAY_ORDER" property="roleDisplayOrder" jdbcType="INTEGER" />
+    <result column="ROLE_DESCRIPTION" property="roleDescription" jdbcType="VARCHAR" />
+    <result column="ROLE_REMARK" property="roleRemark" jdbcType="VARCHAR" />
+    <result column="DATARANGECOUNT" property="datarangeCount" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="UserRoleResultMap" type="com.harry.uac.persistence.UserRoleMisc" >
+    <id column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_DISPLAY_ORDER" property="roleDisplayOrder" jdbcType="INTEGER" />
+    <result column="ROLE_DESCRIPTION" property="roleDescription" jdbcType="VARCHAR" />
+    <result column="ROLE_REMARK" property="roleRemark" jdbcType="VARCHAR" />
+    <result column="DATARANGECOUNT" property="datarangeCount" jdbcType="INTEGER" />
+  </resultMap>
+   <resultMap id="UserGroupResultMap" type="com.harry.uac.persistence.UserGroupMisc" >
+    <id column="GROUP_ID" property="groupId" jdbcType="BIGINT" />
+    <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="APPLICATION_ID" property="applicationId" jdbcType="BIGINT" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="GROUP_TYPE" property="groupType" jdbcType="INTEGER" />
+    <result column="GROUP_DESCRIPTION" property="groupDescription" jdbcType="VARCHAR" />
+    <result column="GROUP_REMARK" property="groupRemark" jdbcType="VARCHAR" />
+    <result column="GROUP_RULE" property="groupRule" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- ======================== -->
+  <select id="existingPrivilegesForRole" parameterType="java.lang.Long" resultMap="RolePrivilegeMap" >
+    SELECT B.APPLICATION_ID,B.PRIVILEGE_ID,B.PRIVILEGE_NAME,B.PRIVILEGE_CODE 
+	FROM UAC.AUTH_ROLE_PRIVILEGE A INNER JOIN UAC.AUTH_PRIVILEGE B
+	ON A.PRIVILEGE_ID = B.PRIVILEGE_ID 
+	WHERE A.ROLE_ID=#{roleId,jdbcType=BIGINT}
+  </select>
+  <select id="otherPrivilegesForRole" parameterType="java.lang.Long" resultMap="RolePrivilegeMap" >
+    SELECT B.APPLICATION_ID,B.PRIVILEGE_ID,B.PRIVILEGE_NAME,B.PRIVILEGE_CODE
+	FROM  UAC.AUTH_PRIVILEGE B
+	WHERE NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_ROLE_PRIVILEGE A
+	WHERE A.PRIVILEGE_ID = B.PRIVILEGE_ID AND A.ROLE_ID=#{roleId,jdbcType=BIGINT})
+  </select>
+  <!-- ======================== -->
+  <select id="selectOrgsForUser" parameterType="java.lang.Long" resultMap="OrgResultMap" >
+	SELECT B.ORG_ID, B.ORG_NAME, B.ORG_CODE, B.ORG_INITIALS, B.ORG_DESCRIPTION, B.ORG_STYLE, B.ORG_STATUS, 
+	B.ORG_PARENT_ID, B.ORG_LAYER_CODE, B.ORG_LEVEL_DICT, B.ORG_DISPLAY_ORDER, 
+	B.ORG_SUPERVISOR_UID, B.ORG_MANAGER_UID, B.ORG_VICE_MANAGER_UID, 
+	B.ORG_ADMIN_UID, B.ORG_MANAGE_ORG_ID, B.ORG_POSTAL_ADDRESS, 
+	B.ORG_POSTAL_CODE, B.ORG_TELEPHONE_NUMBER, B.ORG_FAX_NUMBER, 
+	B.ORG_STARTTIME, B.ORG_ENDTIME, B.ORG_ERP_ID, B.ORG_LOCATION, B.ORG_REMARK 
+	FROM 
+	UAC.AUTH_ORG_USER A INNER JOIN UAC.AUTH_ORG B
+	ON A.ORG_ID = B.ORG_ID
+	WHERE A.USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <!-- ======================== -->
+  <select id="selectGroupsForUser" parameterType="java.lang.Long" resultMap="GroupResultMap" >
+   	SELECT B.GROUP_ID, B.APPLICATION_ID, B.GROUP_NAME, B.GROUP_TYPE, B.GROUP_DESCRIPTION, B.GROUP_RULE, B.GROUP_REMARK FROM 
+	UAC.AUTH_USER_GROUP A  INNER JOIN UAC.AUTH_GROUP B
+	ON A.GROUP_ID = B.GROUP_ID
+	WHERE A.USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectApplictionGroupsForUser" resultMap="GroupResultMap" >
+   	SELECT B.GROUP_ID, B.APPLICATION_ID, B.GROUP_NAME, B.GROUP_TYPE, B.GROUP_DESCRIPTION, B.GROUP_RULE, B.GROUP_REMARK FROM 
+	UAC.AUTH_USER_GROUP A  INNER JOIN UAC.AUTH_GROUP B
+	ON A.GROUP_ID = B.GROUP_ID
+	WHERE B.APPLICATION_ID = #{applicationId}  AND A.USER_ID = #{userId}
+  </select>
+  <!-- ======================== -->
+  <select id="selectRolesFromUserRoleForUser" parameterType="java.lang.Long" resultMap="RoleResultMap" >
+    SELECT DISTINCT(B.ROLE_ID), B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_USER_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE A.USER_ID = #{userId,jdbcType=BIGINT} AND A.ROLE_ID IS NOT NULL
+  </select>
+   <select id="selectApplictionRolesFromUserRoleForUser" resultMap="RoleResultMap" >
+    SELECT DISTINCT(B.ROLE_ID), B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_USER_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE B.APPLICATION_ID = #{applicationId}  AND A.USER_ID = #{userId} AND A.ROLE_ID IS NOT NULL
+  </select>
+  <!-- ======================== -->
+  <select id="selectRolesForUser" parameterType="java.lang.Long" resultMap="RoleResultMap" >
+    SELECT DISTINCT(B.ROLE_ID), B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_USER_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE A.USER_ID = #{userId,jdbcType=BIGINT} AND A.ROLE_ID IS NOT NULL
+	UNION
+	SELECT DISTINCT(B.ROLE_ID), B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_GROUP_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE A.ROLE_ID IS NOT NULL AND A.GROUP_ID IN
+	(
+		SELECT B.GROUP_ID FROM 
+		UAC.AUTH_USER_GROUP A  INNER JOIN UAC.AUTH_GROUP B
+		ON A.GROUP_ID = B.GROUP_ID
+		WHERE A.USER_ID = #{userId,jdbcType=BIGINT}
+	)
+  </select>
+   <select id="selectApplictionRolesForUser" resultMap="RoleResultMap" >
+    SELECT DISTINCT(B.ROLE_ID), B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_USER_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE A.USER_ID = #{userId} and B.APPLICATION_ID = #{applicationId} AND A.ROLE_ID IS NOT NULL
+	UNION
+	SELECT DISTINCT(B.ROLE_ID), B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_GROUP_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE B.APPLICATION_ID = #{applicationId} AND A.ROLE_ID IS NOT NULL AND A.GROUP_ID IN
+	(
+		SELECT B.GROUP_ID FROM 
+		UAC.AUTH_USER_GROUP A  INNER JOIN UAC.AUTH_GROUP B
+		ON A.GROUP_ID = B.GROUP_ID
+		WHERE B.APPLICATION_ID = #{applicationId}  AND A.USER_ID = #{userId}
+	)
+  </select>
+  <!-- ======================== -->
+  <select id="selectRolesForGroup" parameterType="java.lang.Long" resultMap="RoleResultMap" >
+    SELECT DISTINCT(B.ROLE_ID), B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_GROUP_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE A.GROUP_ID = #{groupId,jdbcType=BIGINT} AND A.ROLE_ID IS NOT NULL
+  </select>
+  <select id="selectApplictionRolesForGroup" resultMap="RoleResultMap" >
+    SELECT B.ROLE_ID, B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_GROUP_ROLE A  INNER JOIN UAC.AUTH_ROLE B
+	ON A.ROLE_ID = B.ROLE_ID
+	WHERE B.APPLICATION_ID = #{applicationId} AND A.GROUP_ID = #{groupId} AND A.ROLE_ID IS NOT NULL
+	GROUP BY B.ROLE_ID, B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK
+  </select>
+  <select id="selectApplictionRemainingRolesForGroup" resultMap="RoleResultMap" >
+    SELECT B.ROLE_ID, B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_ROLE B
+	WHERE NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_GROUP_ROLE A
+	WHERE A.GROUP_ID = #{groupId} AND A.ROLE_ID IS NOT NULL AND A.ROLE_ID=B.ROLE_ID)
+	AND B.APPLICATION_ID = #{applicationId}
+  </select>
+  <select id="selectApplictionGroupRoleMiscForGroup" resultMap="GroupRoleResultMap" >
+    SELECT D.GROUP_ID, D.APPLICATION_ID, D.GROUP_NAME, D.GROUP_TYPE, D.GROUP_DESCRIPTION, D.GROUP_RULE, D.GROUP_REMARK,
+	C.ROLE_ID, C.ROLE_NAME, C.ROLE_DISPLAY_ORDER, C.ROLE_DESCRIPTION, C.ROLE_REMARK,
+	(SELECT COUNT(*) AS DATARANGECOUNT FROM UAC.AUTH_GROUP_ROLE E WHERE E.ROLE_ID=B.ROLE_ID AND E.GROUP_ID=B.GROUP_ID AND E.DATARANGE_ID IS NOT NULL)
+	FROM (
+	    SELECT A.GROUP_ID,A.ROLE_ID FROM 
+	    UAC.AUTH_GROUP_ROLE A
+	    WHERE  A.GROUP_ID = #{groupId} AND A.ROLE_ID IS NOT NULL
+	    GROUP BY A.GROUP_ID,A.ROLE_ID)
+	B INNER JOIN UAC.AUTH_ROLE C ON B.ROLE_ID = C.ROLE_ID 
+	  INNER JOIN UAC.AUTH_GROUP D ON B.GROUP_ID = D.GROUP_ID
+	AND C.APPLICATION_ID = #{applicationId} AND D.APPLICATION_ID = #{applicationId}
+  </select>
+  <!-- ======================== -->
+	<select id="selectUserPrivileges" parameterType="java.lang.Long" resultMap="UserPrivilegeMap" >
+  	SELECT * FROM (
+		  	SELECT DISTINCT(C.PRIVILEGE_ID), C.APPLICATION_ID, C.PRIVILEGE_CODE, C.PRIVILEGE_NAME, C.PRIVILEGE_DESCRIPTION, C.PRIVILEGE_REMARK
+			FROM
+			UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_ROLE_PRIVILEGE B 
+			ON  A.ROLE_ID=B.ROLE_ID  INNER JOIN UAC.AUTH_PRIVILEGE C ON B.PRIVILEGE_ID = C.PRIVILEGE_ID
+			WHERE A.DATARANGE_ID IS NULL AND A.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT}
+				UNION
+			SELECT DISTINCT(D.PRIVILEGE_ID), D.APPLICATION_ID, D.PRIVILEGE_CODE, D.PRIVILEGE_NAME, D.PRIVILEGE_DESCRIPTION, D.PRIVILEGE_REMARK 
+			FROM 
+			UAC.AUTH_USER_GROUP A INNER JOIN UAC.AUTH_GROUP_ROLE B
+			ON A.GROUP_ID = B.GROUP_ID INNER JOIN UAC.AUTH_ROLE_PRIVILEGE C
+			ON B.ROLE_ID=C.ROLE_ID INNER JOIN UAC.AUTH_PRIVILEGE D ON C.PRIVILEGE_ID = D.PRIVILEGE_ID
+			WHERE B.DATARANGE_ID IS NULL AND B.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT}
+				UNION
+			SELECT C.PRIVILEGE_ID, C.APPLICATION_ID, C.PRIVILEGE_CODE, C.PRIVILEGE_NAME, C.PRIVILEGE_DESCRIPTION, C.PRIVILEGE_REMARK   FROM  UAC.AUTH_PRIVILEGE C WHERE C.PRIVILEGE_ID 
+			IN(
+				SELECT B.PRIVILEGE_ID 
+				FROM 
+				UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_ROLE_PRIVILEGE B 
+				ON  A.ROLE_ID=B.ROLE_ID  
+				WHERE A.DATARANGE_ID IS NOT NULL AND A.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT}
+				GROUP BY A.DATARANGE_ID,B.PRIVILEGE_ID 
+			)
+				UNION
+			SELECT E.PRIVILEGE_ID, E.APPLICATION_ID, E.PRIVILEGE_CODE, E.PRIVILEGE_NAME, E.PRIVILEGE_DESCRIPTION, E.PRIVILEGE_REMARK FROM  UAC.AUTH_PRIVILEGE E WHERE E.PRIVILEGE_ID 
+			IN(
+				SELECT C.PRIVILEGE_ID
+				FROM UAC.AUTH_USER_GROUP A INNER JOIN UAC.AUTH_GROUP_ROLE B
+				ON A.GROUP_ID = B.GROUP_ID INNER JOIN UAC.AUTH_ROLE_PRIVILEGE C 
+				ON B.ROLE_ID=C.ROLE_ID
+				WHERE B.DATARANGE_ID IS NOT NULL AND B.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT}
+				GROUP BY B.DATARANGE_ID,C.PRIVILEGE_ID
+			)
+	) D INNER JOIN UAC.AUTH_APPLICATION E ON D.APPLICATION_ID = E.APPLICATION_ID
+	</select>
+	<select id="selectApplictionUserPrivileges" resultMap="UserPrivilegeMap" >
+	SELECT * FROM (
+		  	SELECT DISTINCT(C.PRIVILEGE_ID), C.APPLICATION_ID, C.PRIVILEGE_CODE, C.PRIVILEGE_NAME, C.PRIVILEGE_DESCRIPTION, C.PRIVILEGE_REMARK
+			FROM
+			UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_ROLE_PRIVILEGE B 
+			ON  A.ROLE_ID=B.ROLE_ID  INNER JOIN UAC.AUTH_PRIVILEGE C ON B.PRIVILEGE_ID = C.PRIVILEGE_ID
+			WHERE A.DATARANGE_ID IS NULL AND A.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT} AND C.APPLICATION_ID = #{applicationId}
+				UNION
+			SELECT DISTINCT(D.PRIVILEGE_ID), D.APPLICATION_ID, D.PRIVILEGE_CODE, D.PRIVILEGE_NAME, D.PRIVILEGE_DESCRIPTION, D.PRIVILEGE_REMARK 
+			FROM 
+			UAC.AUTH_USER_GROUP A INNER JOIN UAC.AUTH_GROUP_ROLE B
+			ON A.GROUP_ID = B.GROUP_ID INNER JOIN UAC.AUTH_ROLE_PRIVILEGE C
+			ON B.ROLE_ID=C.ROLE_ID INNER JOIN UAC.AUTH_PRIVILEGE D ON C.PRIVILEGE_ID = D.PRIVILEGE_ID
+			WHERE B.DATARANGE_ID IS NULL AND B.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT} AND D.APPLICATION_ID = #{applicationId}
+				UNION
+			SELECT C.PRIVILEGE_ID, C.APPLICATION_ID, C.PRIVILEGE_CODE, C.PRIVILEGE_NAME, C.PRIVILEGE_DESCRIPTION, C.PRIVILEGE_REMARK   FROM  UAC.AUTH_PRIVILEGE C WHERE C.PRIVILEGE_ID 
+			IN(
+				SELECT B.PRIVILEGE_ID 
+				FROM 
+				UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_ROLE_PRIVILEGE B 
+				ON  A.ROLE_ID=B.ROLE_ID  
+				WHERE A.DATARANGE_ID IS NOT NULL AND A.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT}
+				GROUP BY A.DATARANGE_ID,B.PRIVILEGE_ID 
+			) AND C.APPLICATION_ID = #{applicationId}
+				UNION
+			SELECT E.PRIVILEGE_ID, E.APPLICATION_ID, E.PRIVILEGE_CODE, E.PRIVILEGE_NAME, E.PRIVILEGE_DESCRIPTION, E.PRIVILEGE_REMARK FROM  UAC.AUTH_PRIVILEGE E WHERE E.PRIVILEGE_ID 
+			IN(
+				SELECT C.PRIVILEGE_ID
+				FROM UAC.AUTH_USER_GROUP A INNER JOIN UAC.AUTH_GROUP_ROLE B
+				ON A.GROUP_ID = B.GROUP_ID INNER JOIN UAC.AUTH_ROLE_PRIVILEGE C 
+				ON B.ROLE_ID=C.ROLE_ID
+				WHERE B.DATARANGE_ID IS NOT NULL AND B.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT}
+				GROUP BY B.DATARANGE_ID,C.PRIVILEGE_ID
+			) AND E.APPLICATION_ID = #{applicationId}
+	) E INNER JOIN UAC.AUTH_APPLICATION F ON E.APPLICATION_ID = F.APPLICATION_ID		
+	</select>
+	<select id="selectApplictionUserPrivilegesByDatarange" resultMap="UserPrivilegeMap" >
+	SELECT * FROM (
+		  	SELECT DISTINCT(C.PRIVILEGE_ID), C.APPLICATION_ID, C.PRIVILEGE_CODE, C.PRIVILEGE_NAME, C.PRIVILEGE_DESCRIPTION, C.PRIVILEGE_REMARK
+			FROM
+			UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_ROLE_PRIVILEGE B 
+			ON  A.ROLE_ID=B.ROLE_ID  INNER JOIN UAC.AUTH_PRIVILEGE C ON B.PRIVILEGE_ID = C.PRIVILEGE_ID
+			WHERE A.DATARANGE_ID IS NULL AND A.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT} AND C.APPLICATION_ID = #{applicationId} AND A.DATARANGE_ID = #{datarangeId}
+				UNION
+			SELECT DISTINCT(D.PRIVILEGE_ID), D.APPLICATION_ID, D.PRIVILEGE_CODE, D.PRIVILEGE_NAME, D.PRIVILEGE_DESCRIPTION, D.PRIVILEGE_REMARK 
+			FROM 
+			UAC.AUTH_USER_GROUP A INNER JOIN UAC.AUTH_GROUP_ROLE B
+			ON A.GROUP_ID = B.GROUP_ID INNER JOIN UAC.AUTH_ROLE_PRIVILEGE C
+			ON B.ROLE_ID=C.ROLE_ID INNER JOIN UAC.AUTH_PRIVILEGE D ON C.PRIVILEGE_ID = D.PRIVILEGE_ID
+			WHERE B.DATARANGE_ID IS NULL AND B.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT} AND D.APPLICATION_ID = #{applicationId} AND B.DATARANGE_ID = #{datarangeId}
+				UNION
+			SELECT C.PRIVILEGE_ID, C.APPLICATION_ID, C.PRIVILEGE_CODE, C.PRIVILEGE_NAME, C.PRIVILEGE_DESCRIPTION, C.PRIVILEGE_REMARK   FROM  UAC.AUTH_PRIVILEGE C WHERE C.PRIVILEGE_ID 
+			IN(
+				SELECT B.PRIVILEGE_ID 
+				FROM 
+				UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_ROLE_PRIVILEGE B 
+				ON  A.ROLE_ID=B.ROLE_ID  
+				WHERE A.DATARANGE_ID IS NOT NULL AND A.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT} AND A.DATARANGE_ID = #{datarangeId}
+				GROUP BY A.DATARANGE_ID,B.PRIVILEGE_ID 
+			) AND C.APPLICATION_ID = #{applicationId}
+				UNION
+			SELECT E.PRIVILEGE_ID, E.APPLICATION_ID, E.PRIVILEGE_CODE, E.PRIVILEGE_NAME, E.PRIVILEGE_DESCRIPTION, E.PRIVILEGE_REMARK FROM  UAC.AUTH_PRIVILEGE E WHERE E.PRIVILEGE_ID 
+			IN(
+				SELECT C.PRIVILEGE_ID
+				FROM UAC.AUTH_USER_GROUP A INNER JOIN UAC.AUTH_GROUP_ROLE B
+				ON A.GROUP_ID = B.GROUP_ID INNER JOIN UAC.AUTH_ROLE_PRIVILEGE C 
+				ON B.ROLE_ID=C.ROLE_ID
+				WHERE B.DATARANGE_ID IS NOT NULL AND B.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId,jdbcType=BIGINT} AND B.DATARANGE_ID = #{datarangeId}
+				GROUP BY B.DATARANGE_ID,C.PRIVILEGE_ID
+			) AND E.APPLICATION_ID = #{applicationId}
+	) E INNER JOIN UAC.AUTH_APPLICATION F ON E.APPLICATION_ID = F.APPLICATION_ID		
+	</select> 
+	<select id="selectPrivilegeDataranges"  resultMap="DatarangePrivilegeMap">
+	SELECT D.DATARANGE_ID, D.APPLICATION_ID, D.DATARANGE_CODE, D.DATARANGE_NAME, D.DATARANGE_VALUE, D.DATARANGE_DESCRIPTION FROM  UAC.AUTH_DATARANGE D WHERE D.DATARANGE_ID  
+	IN( 
+		SELECT A.DATARANGE_ID  
+		FROM  
+		UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_ROLE_PRIVILEGE B  
+		ON  A.ROLE_ID=B.ROLE_ID   
+		WHERE A.DATARANGE_ID IS NOT NULL AND A.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId} AND B.PRIVILEGE_ID=#{privilegeId}
+		GROUP BY A.DATARANGE_ID,B.PRIVILEGE_ID  
+	)
+	UNION
+	SELECT D.DATARANGE_ID, D.APPLICATION_ID, D.DATARANGE_CODE, D.DATARANGE_NAME, D.DATARANGE_VALUE, D.DATARANGE_DESCRIPTION FROM  UAC.AUTH_DATARANGE D WHERE D.DATARANGE_ID  
+	IN( 
+		SELECT B.DATARANGE_ID
+		FROM UAC.AUTH_USER_GROUP A INNER JOIN UAC.AUTH_GROUP_ROLE B
+		ON A.GROUP_ID = B.GROUP_ID INNER JOIN UAC.AUTH_ROLE_PRIVILEGE C 
+		ON B.ROLE_ID=C.ROLE_ID
+		WHERE B.DATARANGE_ID IS NOT NULL AND B.ROLE_ID IS NOT NULL AND A.USER_ID=#{userId} AND C.PRIVILEGE_ID=#{privilegeId}
+		GROUP BY B.DATARANGE_ID,C.PRIVILEGE_ID
+	)
+	</select>
+	<!-- ======================== -->
+	<select id="selectGroupRoleDataranges" resultMap="DatarangePrivilegeMap" >
+	SELECT B.DATARANGE_ID, B.APPLICATION_ID, B.DATARANGE_CODE, B.DATARANGE_NAME, B.DATARANGE_VALUE, B.DATARANGE_DESCRIPTION 
+	FROM  UAC.AUTH_GROUP_ROLE A INNER JOIN UAC.AUTH_DATARANGE B
+	ON A.DATARANGE_ID = B.DATARANGE_ID
+	WHERE A.DATARANGE_ID IS NOT NULL AND A.ROLE_ID=#{roleId} AND A.GROUP_ID=#{groupId}
+    </select>
+    <select id="selectApplictionRemainingGroupRoleDataranges" resultMap="DatarangePrivilegeMap" >
+    SELECT B.DATARANGE_ID, B.APPLICATION_ID, B.DATARANGE_CODE, B.DATARANGE_NAME, B.DATARANGE_VALUE, B.DATARANGE_DESCRIPTION FROM 
+	UAC.AUTH_DATARANGE B
+	WHERE NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_GROUP_ROLE A
+	WHERE A.GROUP_ID = #{groupId} AND A.DATARANGE_ID IS NOT NULL AND A.DATARANGE_ID=B.DATARANGE_ID AND A.ROLE_ID=#{roleId})
+	AND B.APPLICATION_ID = #{applicationId}
+  </select>
+	<!-- ======================== -->
+	<select id="selectApplictionRemainingRolesForUser" resultMap="RoleResultMap" >
+    SELECT B.ROLE_ID, B.APPLICATION_ID, B.ROLE_NAME, B.ROLE_DISPLAY_ORDER, B.ROLE_DESCRIPTION, B.ROLE_REMARK FROM 
+	UAC.AUTH_ROLE B
+	WHERE NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_USER_ROLE A
+	WHERE A.USER_ID = #{userId} AND A.ROLE_ID IS NOT NULL AND A.ROLE_ID=B.ROLE_ID)
+	AND B.APPLICATION_ID = #{applicationId}
+  </select>
+  <select id="selectApplictionUserRoleMiscForUser" resultMap="UserRoleResultMap" >
+    SELECT D.USER_ID, C.APPLICATION_ID, C.ROLE_ID, C.ROLE_NAME, C.ROLE_DISPLAY_ORDER, C.ROLE_DESCRIPTION, C.ROLE_REMARK,
+	(SELECT COUNT(*) AS DATARANGECOUNT FROM UAC.AUTH_USER_ROLE E WHERE E.ROLE_ID=B.ROLE_ID AND E.USER_ID=B.USER_ID AND E.DATARANGE_ID IS NOT NULL)
+	FROM (
+	    SELECT A.USER_ID,A.ROLE_ID FROM 
+	    UAC.AUTH_USER_ROLE A
+	    WHERE  A.USER_ID = #{userId} AND A.ROLE_ID IS NOT NULL
+	    GROUP BY A.USER_ID,A.ROLE_ID)
+	B INNER JOIN UAC.AUTH_ROLE C ON B.ROLE_ID = C.ROLE_ID 
+	  INNER JOIN UAC.AUTH_USER D ON B.USER_ID = D.USER_ID
+	AND C.APPLICATION_ID = #{applicationId}
+  </select>
+  <select id="selectUserRoleDataranges" resultMap="DatarangePrivilegeMap" >
+	SELECT B.DATARANGE_ID, B.APPLICATION_ID, B.DATARANGE_CODE, B.DATARANGE_NAME, B.DATARANGE_VALUE, B.DATARANGE_DESCRIPTION 
+	FROM  UAC.AUTH_USER_ROLE A INNER JOIN UAC.AUTH_DATARANGE B
+	ON A.DATARANGE_ID = B.DATARANGE_ID
+	WHERE A.DATARANGE_ID IS NOT NULL AND A.ROLE_ID=#{roleId} AND A.USER_ID=#{userId}
+    </select>
+    <select id="selectApplictionRemainingUserRoleDataranges" resultMap="DatarangePrivilegeMap" >
+    SELECT B.DATARANGE_ID, B.APPLICATION_ID, B.DATARANGE_CODE, B.DATARANGE_NAME, B.DATARANGE_VALUE, B.DATARANGE_DESCRIPTION FROM 
+	UAC.AUTH_DATARANGE B
+	WHERE NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_USER_ROLE A
+	WHERE A.USER_ID = #{userId} AND A.DATARANGE_ID IS NOT NULL AND A.DATARANGE_ID=B.DATARANGE_ID AND A.ROLE_ID=#{roleId})
+	AND B.APPLICATION_ID = #{applicationId}
+  </select>
+  <!-- ======================== -->
+  <select id="selectApplictionRemainingGroupsForUser" resultMap="GroupResultMap" >
+    SELECT  B.GROUP_ID, B.APPLICATION_ID, B.GROUP_NAME, B.GROUP_TYPE, B.GROUP_DESCRIPTION, B.GROUP_REMARK  FROM 
+	UAC.AUTH_GROUP B
+	WHERE NOT EXISTS(
+	SELECT 1 FROM UAC.AUTH_USER_GROUP A
+	WHERE A.USER_ID = #{userId} 
+	AND A.GROUP_ID IS NOT NULL AND A.GROUP_ID=B.GROUP_ID)
+	AND B.APPLICATION_ID = #{applicationId}
+  </select>
+   <select id="selectApplictionUserGroupMiscForUser" resultMap="UserGroupResultMap" >
+   SELECT  D.USER_ID, C.APPLICATION_ID, C.GROUP_ID, C.GROUP_NAME, C.GROUP_TYPE, C.GROUP_DESCRIPTION, C.GROUP_REMARK 	FROM (
+   SELECT A.USER_ID,A.GROUP_ID  FROM 
+   UAC.AUTH_USER_GROUP A
+   WHERE  A.USER_ID = #{userId}  AND A.GROUP_ID IS NOT NULL  GROUP BY A.USER_ID,A.GROUP_ID)
+   B INNER JOIN UAC.AUTH_GROUP C ON B.GROUP_ID = C.GROUP_ID 
+   INNER JOIN UAC.AUTH_USER D ON B.USER_ID = D.USER_ID
+   AND C.APPLICATION_ID =  #{applicationId}
+  </select>
+</mapper>
